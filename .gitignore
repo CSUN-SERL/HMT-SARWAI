@@ -1,2 +1,2 @@
 .vscode/
-logger_test.py
+*.pyc
