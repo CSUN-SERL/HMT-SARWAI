@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """Log data into csv files
 
 This module uses dictionary data to log into data frames. The data frames are
@@ -7,10 +5,11 @@ then used to save the data into time-stamped csv files inside time-stamped
 folders of the current session.
 """
 
-from __future__ import print_function, division, absolute_import
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
 import os
 import datetime
-import math
 import pandas as pd
 
 class DataLogger(object):
@@ -54,7 +53,7 @@ class DataLogger(object):
             String of current system date and time.
         """
 
-        return '{:%Y-%m-%d %H:%M:%S.%f}'.format(datetime.datetime.now())  
+        return '{:%Y-%m-%d %H:%M:%S.%f}'.format(datetime.datetime.now())
 
     def log(self, data):
         """Logs the data to the data frame.

@@ -1,6 +1,6 @@
-#!/usr/bin/env python
-
-from __future__ import print_function, division, absolute_import
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
 import random
 import operator
 import math
@@ -46,12 +46,12 @@ class DeviceInterface(object):
             data_set += [max(emotions.iteritems(), key=operator.itemgetter(1))[0]]
         else:
             data_set += [self._NA]
-        
+
         if self._heart_data:
             data_set += [int(random.uniform(60, 120))]
         else:
             data_set += [self._NA]
-        
+
         if self._gaze_data:
             data_set += [
                 int(random.uniform(0, 1920)),

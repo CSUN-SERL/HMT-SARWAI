@@ -1,7 +1,6 @@
-#!/usr/bin/env python
-
-from __future__ import print_function, division, absolute_import
-import os
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
 
 from logger import DataLogger
 from device_interface import DeviceInterface
@@ -32,10 +31,10 @@ class DataGatherer(object):
 
     def reset_session(self):
         pass
-    
+
     def reset_user(self):
         pass
-    
+
     def get_user(self):
         pass
 
