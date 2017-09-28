@@ -1,61 +1,31 @@
 #!/usr/bin/env python
 
 from __future__ import print_function, division, absolute_import
+import os
 
 from logger import DataLogger
 from device_interface import DeviceInterface
 
 class DataGatherer(object):
-    _EMOTION_COLUMNS = [
-        'angry',
-        'disgust',
-        'fear',
-        'happy',
-        'sad',
-        'surprised',
-        'neutral'
-    ]
-    _GAZE_COLUMNS = ['x', 'y']
-    _HEART_COLUMNS = ['bpm']
-    #_GSR_COLUMNS = ['i dont know']
+    _COLUMNS = ['emotion', 'bpm', 'gaze-x', 'gaze-y']
 
-    def __init__(self, limit):
+    def __init__(self, limit, name):
         self._limit = limit
-        self.__emotion_log = DataLogger(
+        self.__data_log = DataLogger(
             self._limit,
-            columns=self._EMOTION_COLUMNS,
-            name='emotion'
-        )
-        self.__gaze_log = DataLogger(
-            self._limit,
-            columns=self._GAZE_COLUMNS,
-            name='gaze'
-        )
-        self.__heart_log = DataLogger(
-            self._limit,
-            columns=self._HEART_COLUMNS,
-            name='heart'
+            columns=self._COLUMNS,
+            path='/home/danny/Desktop/users/{}'.format(name)
         )
         self.__device_interface = DeviceInterface()
 
-    def _emotion(self, data):
-        self.__emotion_log.log(data)
-
-    def _eye_gaze(self, data):
-        self.__gaze_log.log(data)
-
-    def _heart_rate(self, data):
-        self.__heart_log.log(data)
+    def _data(self, data):
+        self.__data_log.log(data)
 
     def check(self):
-        self.__device_interface.get_emotion(self._emotion)
-        self.__device_interface.get_eye_gaze(self._eye_gaze)
-        self.__device_interface.get_heart_rate(self._heart_rate)
+        self.__device_interface.get_data(self._data)
 
     def save(self):
-        self.__emotion_log.save()
-        self.__gaze_log.save()
-        self.__heart_log.save()
+        self.__data_log.save()
 
     def reset_all(self):
         pass

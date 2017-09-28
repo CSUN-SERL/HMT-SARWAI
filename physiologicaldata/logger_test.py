@@ -6,7 +6,7 @@ import time
 from data_gatherer import DataGatherer
 
 def main():
-    data = DataGatherer(1000)
+    data = DataGatherer(1000, 'dan')
     count = 0
 
     while True:

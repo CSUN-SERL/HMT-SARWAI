@@ -2,33 +2,65 @@
 
 from __future__ import print_function, division, absolute_import
 import random
+import operator
+import math
 
 class DeviceInterface(object):
+    _NA = 'N/A'
+
     def __init__(self):
-        pass
+        self._emotion_data = True
+        self._heart_data = True
+        self._gaze_data = True
 
-    def get_emotion(self, emotion):
-        emotions = [
-            random.uniform(0, 1),
-            random.uniform(0, 1),
-            random.uniform(0, 1),
-            random.uniform(0, 1),
-            random.uniform(0, 1),
-            random.uniform(0, 1),
-            random.uniform(0, 1)
-        ]
-        emotion(emotions)
+    def __round_float(self, val):
+        """Rounds floating point to the second decimal place.
 
-    def get_eye_gaze(self, eye_gaze):
-        gaze = [
-            random.uniform(0, 255),
-            random.uniform(0, 255)
-        ]
-        eye_gaze(gaze)
+        The value is multiplied by 100 to shift two digits to the left. From
+        the decimal place. The ceiling will then truncate the decimal. This is
+        then divided by 100 to shift two digits to the right from the decimal
+        place.
 
-    def get_heart_rate(self, heart_rate):
-        heart = [random.uniform(60, 120)]
-        heart_rate(heart)
+        Args:
+            val (float): Floating point number to round.
+
+        Returns:
+            Rounded floating point number.
+        """
+
+        return math.ceil(val*100)/100
+
+    def get_data(self, data):
+        data_set = []
+
+        if self._emotion_data:
+            emotions = {
+                'angry': random.uniform(0, 1),
+                'disgust': random.uniform(0, 1),
+                'fear': random.uniform(0, 1),
+                'happy': random.uniform(0, 1),
+                'sad': random.uniform(0, 1),
+                'surprise': random.uniform(0, 1),
+                'neutral': random.uniform(0, 1)
+            }
+            data_set += [max(emotions.iteritems(), key=operator.itemgetter(1))[0]]
+        else:
+            data_set += [self._NA]
+        
+        if self._heart_data:
+            data_set += [int(random.uniform(60, 120))]
+        else:
+            data_set += [self._NA]
+        
+        if self._gaze_data:
+            data_set += [
+                int(random.uniform(0, 1920)),
+                int(random.uniform(0, 1080))
+            ]
+        else:
+            data_set += [self._NA, self._NA]
+
+        data(data_set)
 
 def main():
     """Runs as main if python file is not imported

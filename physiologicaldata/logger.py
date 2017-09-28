@@ -28,7 +28,7 @@ class DataLogger(object):
             name (str): Contains the title of the data.
     """
 
-    def __init__(self, limit=1000, columns=None, name=''):
+    def __init__(self, limit=1000, columns=None, path=os.path.expanduser('~')):
         """Initializes DataLogger.
 
         Log limit, columns dictionary, name, data folder,
@@ -41,8 +41,8 @@ class DataLogger(object):
         self._log_limit = limit
         self._log_count = 0 # keeps count of logging attempts
         self._columns = ['timestamp'] + columns
-        self._name = name
-        self._d_folder = self.__datestamp()
+        self._path = path
+        self._path = path
         self.__df = pd.DataFrame({}, columns=self._columns)
 
         print('Data Log initialized')
@@ -54,24 +54,7 @@ class DataLogger(object):
             String of current system date and time.
         """
 
-        return '{}-{:%Y-%m-%d %H:%M:%S.%f}'.format(self._name, datetime.datetime.now())
-
-    def __round_float(self, val):
-        """Rounds floating point to the second decimal place.
-
-        The value is multiplied by 100 to shift two digits to the left. From
-        the decimal place. The ceiling will then truncate the decimal. This is
-        then divided by 100 to shift two digits to the right from the decimal
-        place.
-
-        Args:
-            val (float): Floating point number to round.
-
-        Returns:
-            Rounded floating point number.
-        """
-
-        return math.ceil(val*100)/100   
+        return '{:%Y-%m-%d %H:%M:%S.%f}'.format(datetime.datetime.now())  
 
     def log(self, data):
         """Logs the data to the data frame.
@@ -119,11 +102,11 @@ class DataLogger(object):
         saved into a csv file inside said folder.
         """
 
-        if not os.path.isdir(self._d_folder):  # create folder if nonexistent
-            os.makedirs(self._d_folder)
+        if not os.path.isdir(self._path):  # create folder if nonexistent
+            os.makedirs(self._path)
 
         # specify name and file path and save to csv
-        d_file = '{}/{}.csv'.format(self._d_folder, self.__datestamp())
+        d_file = '{}/{}.csv'.format(self._path, self.__datestamp())
         self.__df.to_csv(d_file)
         self.__df = None
 
