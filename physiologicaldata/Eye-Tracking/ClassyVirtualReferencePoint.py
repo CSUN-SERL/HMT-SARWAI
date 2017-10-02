@@ -141,7 +141,7 @@ class ClassyVirtualReferencePoint(object):
                             cx, cy = keypoints[i].pt#this is different from my other code but I think it's good
                             cx, cy = int(cx), int(cy)
                             cv2.putText(img, str(oldlabel), (cx, cy), cv2.FONT_HERSHEY_SIMPLEX, .25, (100, 170, 0))
-        #step down the weights of the not found ones
+        # Step down the weights of the not found ones.
         for kp in self.keypointdata:
             if kp.found == 0:
                 kp.weight = 0
