@@ -6,6 +6,7 @@ from __future__ import print_function
 
 import cv2
 import numpy as np
+import operator
 
 from keras.models import Sequential
 from keras.layers import Conv2D, Dropout, Flatten, Dense
@@ -70,6 +71,18 @@ class EmotionClassifier:
         """
         pass
 
+    def emotion_scores(self, image):
+        resized_img = cv2.resize(image, (48, 48), interpolation=cv2.INTER_AREA)
+
+        resized_img = np.expand_dims(resized_img, -1)
+        resized_img = np.expand_dims(resized_img, 0)
+
+        list_of_list = self.model.predict(resized_img, batch_size=1, verbose=1)
+
+        angry, disgust, fear, happy, sad, surprise, neutral = [prob for lst in list_of_list for prob in lst]
+
+        return angry, disgust, fear, happy, sad, surprise, neutral
+
     def predict_emotion(self, face_image):
         """Predicts the emotion of a face.
 
@@ -81,12 +94,17 @@ class EmotionClassifier:
             dict: A dictionary of one-hot-encoded emotions as values with their corresponding keys.
         """
 
-        resized_img = cv2.resize(face_image, (48, 48), interpolation=cv2.INTER_AREA)
+        angry, disgust, fear, happy, sad, surprise, neutral = self.emotion_scores(face_image)
 
-        resized_img = np.expand_dims(resized_img, -1)
-        resized_img = np.expand_dims(resized_img, 0)
+        emotions = {
+            'angry': angry,
+            'disgust': disgust,
+            'fear': fear,
+            'happy': happy,
+            'sad': sad,
+            'surprise': surprise,
+            'neutral': neutral
+        }
 
-        list_of_list = self.model.predict(resized_img, batch_size=1, verbose=1)
-        angry, disgust, fear, happy, sad, surprise, neutral = [prob for lst in list_of_list for prob in lst]
 
-        return [angry, disgust, fear, happy, sad, surprise, neutral]
+        return max(emotions.iteritems(), key=operator.itemgetter(1))[0]
