@@ -15,17 +15,6 @@ class DeviceInterface(object):
 
     def __round_float(self, val):
         """Rounds floating point to the second decimal place.
-
-        The value is multiplied by 100 to shift two digits to the left. From
-        the decimal place. The ceiling will then truncate the decimal. This is
-        then divided by 100 to shift two digits to the right from the decimal
-        place.
-
-        Args:
-            val (float): Floating point number to round.
-
-        Returns:
-            Rounded floating point number.
         """
 
         return math.ceil(val*100)/100

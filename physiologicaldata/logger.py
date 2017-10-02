@@ -48,9 +48,6 @@ class DataLogger(object):
 
     def __datestamp(self):
         """Formats system date time to string.
-
-        Returns:
-            String of current system date and time.
         """
 
         return '{:%Y-%m-%d %H:%M:%S.%f}'.format(datetime.datetime.now())

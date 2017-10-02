@@ -16,7 +16,11 @@ def signal_handler(sig, frame):
 signal.signal(signal.SIGINT, signal_handler)
 
 def main():
-    data = DataGatherer(1000, 0.5, 'dan')
+    data = DataGatherer(1000, 0.1, 'danny')
+
+    #data.reset_all()
+    #data.reset_user('danny')
+
     data.start()
 
     count = 0
@@ -26,8 +30,6 @@ def main():
 
     data.stop()
     data.save()
-
-    #print('All data logged.')
 
 if __name__ == '__main__':
     main()

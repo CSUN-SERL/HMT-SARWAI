@@ -2,6 +2,8 @@ from __future__ import print_function
 from __future__ import division
 from __future__ import absolute_import
 import thread
+import os
+import shutil
 import time
 
 from logger import DataLogger
@@ -15,10 +17,11 @@ class DataGatherer(object):
     def __init__(self, limit, rate, name):
         self._limit = limit
         self._rate = rate
+        self._path = '/home/danny/Desktop/users'
         self.__data_log = DataLogger(
             self._limit,
             columns=self._COLUMNS,
-            path='/home/danny/Desktop/users/{}'.format(name)
+            path='{}/{}'.format(self._path, name)
         )
         self.__device_interface = DeviceInterface()
 
@@ -47,13 +50,31 @@ class DataGatherer(object):
         self.__data_log.save()
 
     def reset_all(self):
-        pass
+        if not os.path.isdir(self._path):
+            print('No users.')
+            return
+        
+        print('Deleting all users.')
+        user_dirs = os.listdir(self._path)
+        for folder in user_dirs:
+            shutil.rmtree('{}/{}'.format(self._path, folder))
+
 
     def reset_session(self):
         pass
 
-    def reset_user(self):
-        pass
+    def reset_user(self, user):
+        if not os.path.isdir(self._path):
+            print('No users.')
+            return
+
+        user_path = '{}/{}'.format(self._path, user)
+        if not os.path.isdir(user_path):
+            print('User does not exist.')
+            return
+
+        print('Deleting user {}'.format(user))
+        shutil.rmtree(user_path)
 
     def get_user(self):
         pass
