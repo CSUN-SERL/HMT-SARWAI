@@ -34,6 +34,11 @@ class DataGatherer(object):
     _logging = False
 
     def __init__(self, limit, rate, name):
+        """Initializes DataGatherer.
+
+        Data logger and device interface are initialized.
+        """
+
         self._limit = limit
         self._rate = rate
         self._path = '/home/danny/Desktop/users'
@@ -44,45 +49,80 @@ class DataGatherer(object):
         )
         self.__device_interface = DeviceInterface()
 
+        # Start thread on thread_data method with name Thread-1
         try:
             thread.start_new_thread(self.__thread_data, ('Thread-1', self._rate))
         except Exception as e:
             print(e)
 
     def __thread_data(self, thread_name, rate):
+        """Thread method to capture data from device interface.
+        """
+
         while True:
             if self._logging:
-                time.sleep(rate)
+                time.sleep(rate) # controls the data logging rate
                 #print(thread_name)
                 self.__device_interface.get_data(self._data)
 
     def _data(self, data):
+        """_data is a callback method for the device interface.
+        """
+
         self.__data_log.log(data)
 
     def start(self):
+        """Start user data logging.
+
+        Logging is set to true for the thread method to start logging.
+        """
+
         self._logging = True
 
     def stop(self):
+        """Stop user data logging.
+
+        Logging is set to false for the thread method to stop logging.
+        """
         self._logging = False
 
     def save(self):
+        """Saves user data.
+        """
+
         self.__data_log.save()
 
     def reset_all(self):
+        """Resets logged data for all users.
+
+        All user directories are deleted if users exist.
+        """
+
         if not os.path.isdir(self._path):
             print('No users.')
             return
-        
+
         print('Deleting all users.')
         user_dirs = os.listdir(self._path)
-        for folder in user_dirs:
+        for folder in user_dirs: # delete all existing user directories
             shutil.rmtree('{}/{}'.format(self._path, folder))
 
 
     def reset_session(self):
+        """Resets users current logged session
+        """
+
         pass
 
     def reset_user(self, user):
+        """Resets logged data for the specified user.
+
+        The directory for the specified user is deleted if the user exists.
+
+        Args:
+            user (string): Specifies the name of the user.
+        """
+
         if not os.path.isdir(self._path):
             print('No users.')
             return
@@ -96,9 +136,15 @@ class DataGatherer(object):
         shutil.rmtree(user_path)
 
     def get_user(self):
+        """Gets the current user.
+        """
+
         pass
 
     def set_user(self):
+        """Sets the current user.
+        """
+
         pass
 
 def main():

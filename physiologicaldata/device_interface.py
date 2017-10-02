@@ -1,3 +1,10 @@
+"""Retrieve data from external devices and software.
+
+This module retrieves data from devices and software (e.g. Emotion Detection,
+Heart Rate, Gaze Tracking, and Galvanic Skin Response), and sends the data
+through a callback function.
+"""
+
 from __future__ import print_function
 from __future__ import division
 from __future__ import absolute_import
@@ -6,9 +13,19 @@ import operator
 import math
 
 class DeviceInterface(object):
-    _NA = 'N/A'
+    """Device Interface manages data from devices and software.
+
+    Data is retrieved from external devices and software, and calls an external callback
+    function with the devices data.
+    """
+
+    _NA = 'N/A' # specifies the output if a device is not available
 
     def __init__(self):
+        """Initializes DeviceInterface.
+
+        Device availability is determined.
+        """
         self._emotion_data = True
         self._heart_data = True
         self._gaze_data = True
@@ -20,6 +37,16 @@ class DeviceInterface(object):
         return math.ceil(val*100)/100
 
     def get_data(self, data):
+        """Gets data from the devices.
+
+        Data is retrieved from external devices and software and saves it in an
+        array. This array is passed as an argument to the 'data' callback
+        function.
+
+        Args:
+            data (function): Callback function with array parameter.
+        """
+
         data_set = []
 
         if self._emotion_data:
@@ -32,6 +59,7 @@ class DeviceInterface(object):
                 'surprise': random.uniform(0, 1),
                 'neutral': random.uniform(0, 1)
             }
+            # get emotion key based on highest value.
             data_set += [max(emotions.iteritems(), key=operator.itemgetter(1))[0]]
         else:
             data_set += [self._NA]
@@ -49,7 +77,7 @@ class DeviceInterface(object):
         else:
             data_set += [self._NA, self._NA]
 
-        data(data_set)
+        data(data_set) # call callback function with dataset
 
 def main():
     """Runs as main if python file is not imported
