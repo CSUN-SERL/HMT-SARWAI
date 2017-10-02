@@ -24,14 +24,13 @@ class DataLogger(object):
                 parameter not specified.
             columns (dict): A dictionary of strings for the header of the
                 dataframe.
-            name (str): Contains the title of the data.
+            path (str): Contains the path directory for the data.
     """
 
     def __init__(self, limit=1000, columns=None, path=os.path.expanduser('~')):
         """Initializes DataLogger.
 
-        Log limit, columns dictionary, name, data folder,
-        and data frame are initialized.
+        Columns dictionary and data frame are initialized.
         """
 
         if not columns:
@@ -40,7 +39,6 @@ class DataLogger(object):
         self._log_limit = limit
         self._log_count = 0 # keeps count of logging attempts
         self._columns = ['timestamp'] + columns
-        self._path = path
         self._path = path
         self.__df = pd.DataFrame({}, columns=self._columns)
 
@@ -61,7 +59,7 @@ class DataLogger(object):
             data (dictionary): Contains a dictionary of strings.
         """
 
-        if self.__df is None:
+        if self.__df is None: # Reinitialize the dataframe if it's None
             self.__df = pd.DataFrame({}, columns=self._columns)
             print('New dataframe initialized')
 

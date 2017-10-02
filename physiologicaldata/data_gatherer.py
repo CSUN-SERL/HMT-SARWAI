@@ -1,3 +1,10 @@
+"""Log user data
+
+This module logs data from the device interface for specified users. Users
+can be added by logging data for that user and deleted by reseting all users
+or one particular user.
+"""
+
 from __future__ import print_function
 from __future__ import division
 from __future__ import absolute_import
@@ -10,7 +17,19 @@ from logger import DataLogger
 from device_interface import DeviceInterface
 
 class DataGatherer(object):
-    _COLUMNS = ['emotion', 'bpm', 'gaze-x', 'gaze-y']
+    """Data Gatherer manages user data logging.
+
+    A folder is created for all users and named after each user. A thread
+    is then initalized to capture data from the device interface. This data
+    is logged into csv files relative to its intended user.
+
+    Args:
+            limit (int): Specifies the logging limit.
+            rate (int): Specifies the logging rate.
+            name (str): Contains name of user.
+    """
+
+    _COLUMNS = ['emotion', 'bpm', 'Gx', 'Gy']
 
     _logging = False
 
