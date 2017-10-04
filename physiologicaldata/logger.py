@@ -96,6 +96,10 @@ class DataLogger(object):
         saved into a csv file inside said folder.
         """
 
+        if self.__df is None:
+            print('No data frame to save')
+            return
+
         if not os.path.isdir(self._path):  # create folder if nonexistent
             os.makedirs(self._path)
 

@@ -33,7 +33,7 @@ class DataGatherer(object):
 
     _logging = False
 
-    def __init__(self, limit, rate, name):
+    def __init__(self, limit, rate):
         """Initializes DataGatherer.
 
         Data logger and device interface are initialized.
@@ -41,12 +41,9 @@ class DataGatherer(object):
 
         self._limit = limit
         self._rate = rate
-        self._path = '/home/danny/Desktop/users'
-        self.__data_log = DataLogger(
-            self._limit,
-            columns=self._COLUMNS,
-            path='{}/{}'.format(self._path, name)
-        )
+        self._path = 'user_data' # '/home/danny/Desktop/user_data'
+        self._user = None
+        self.__data_log = None
         self.__device_interface = DeviceInterface()
 
         # Start thread on thread_data method with name Thread-1
@@ -54,6 +51,23 @@ class DataGatherer(object):
             thread.start_new_thread(self.__thread_data, ('Thread-1', self._rate))
         except Exception as e:
             print(e)
+
+    def __set_data_logger(self):
+        """Initializes data logger
+        """
+
+        if self._user is None or self._path is None:
+            print('Set user and path!')
+            return
+
+        if self.__data_log is not None:
+            self.__data_log = None
+
+        self.__data_log = DataLogger(
+            self._limit,
+            columns=self._COLUMNS,
+            path='{}/{}'.format(self._path, self._user)
+        )
 
     def __thread_data(self, thread_name, rate):
         """Thread method to capture data from device interface.
@@ -77,6 +91,10 @@ class DataGatherer(object):
         Logging is set to true for the thread method to start logging.
         """
 
+        if self.__data_log is None:
+            print('User or path not set!')
+            return
+
         self._logging = True
 
     def stop(self):
@@ -84,11 +102,20 @@ class DataGatherer(object):
 
         Logging is set to false for the thread method to stop logging.
         """
+
+        if self.__data_log is None:
+            print('User or path not set!')
+            return
+
         self._logging = False
 
     def save(self):
         """Saves user data.
         """
+
+        if self.__data_log is None:
+            print('User or path not set!')
+            return
 
         self.__data_log.save()
 
@@ -114,7 +141,7 @@ class DataGatherer(object):
 
         pass
 
-    def reset_user(self, user):
+    def reset_user(self):
         """Resets logged data for the specified user.
 
         The directory for the specified user is deleted if the user exists.
@@ -123,16 +150,20 @@ class DataGatherer(object):
             user (string): Specifies the name of the user.
         """
 
+        if self._user is None:
+            print('User not set!')
+            return
+
         if not os.path.isdir(self._path):
             print('No users.')
             return
 
-        user_path = '{}/{}'.format(self._path, user)
+        user_path = '{}/{}'.format(self._path, self._user)
         if not os.path.isdir(user_path):
             print('User does not exist.')
             return
 
-        print('Deleting user {}'.format(user))
+        print('Deleting user {}'.format(self._user))
         shutil.rmtree(user_path)
 
     def get_user(self):
@@ -141,11 +172,41 @@ class DataGatherer(object):
 
         pass
 
-    def set_user(self):
+    def set_user(self, user):
         """Sets the current user.
+
+        Set the current user to log data for.
+
+        Args:
+            user (string): Specifies the name of the user.
         """
 
-        pass
+        if user is '' or user is None or not user:
+            print('Invalid user!')
+            return
+
+        print('User set')
+
+        self._user = user
+        self.__set_data_logger()
+
+    '''
+    def set_path(self, path):
+        """Sets the data path directory.
+
+        Set the path in which the data will be saved in.
+
+        Args:
+            path (string): Specifies the path of the data.
+        """
+
+        print('Path set')
+
+        self._path = '{}/user_data'.format(path)
+
+        if self._user is not None and self._path is not None:
+            self.__set_data_logger()
+    '''
 
 def main():
     """Runs as main if python file is not imported
