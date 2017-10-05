@@ -43,6 +43,8 @@ class DataGatherer(object):
         self._rate = rate
         self._path = 'user_data' # '/home/danny/Desktop/user_data'
         self._user = None
+        self._device_data = None
+        self._device_status = None
         self.__data_log = None
         self.__device_interface = DeviceInterface()
 
@@ -74,16 +76,45 @@ class DataGatherer(object):
         """
 
         while True:
-            if self._logging:
-                time.sleep(rate) # controls the data logging rate
-                #print(thread_name)
-                self.__device_interface.get_data(self._data)
+            time.sleep(rate) # controls the data logging rate
 
-    def _data(self, data):
-        """_data is a callback method for the device interface.
+            self.__device_interface.get_status(self._device_status_callback)
+
+            if self._logging:
+                #print(thread_name)
+                self.__device_interface.get_data(self._device_data_callback)
+
+    def _device_data_callback(self, data):
+        """_device_data_callback is a callback method for the device interface.
         """
 
+        self._device_data = data
         self.__data_log.log(data)
+
+    def _device_status_callback(self, status):
+        """_device_status_callback is a callback method for the device interface.
+        """
+
+        self._device_status = status
+
+    def get_data(self, data_callback):
+        """Gets data from the device interface.
+
+        Data is retrieved from Device Interface. This array is passed as an
+        argument to the 'data' callback function.
+
+        Args:
+            data (function): Callback function with array parameter.
+        """
+
+        data_set = []
+
+        if self._logging:
+            data_set = self._device_data
+        else:
+            data_set = ['N/A', 'N/A', 'N/A', 'N/A']
+
+        data_callback(data_set, self._device_status)
 
     def start(self):
         """Start user data logging.

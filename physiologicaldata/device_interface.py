@@ -36,7 +36,22 @@ class DeviceInterface(object):
 
         return math.ceil(val*100)/100
 
-    def get_data(self, data):
+    def get_status(self, status_callback):
+        """Gets status from the devices.
+
+        Status is retrieved from external devices and software and saves it in an
+        array. This array is passed as an argument to the 'status' callback
+        function.
+
+        Args:
+            status_callback (function): Callback function with array parameter.
+        """
+
+        status_set = [self._emotion_data, self._heart_data, self._gaze_data]
+
+        status_callback(status_set) # call callback function with status set
+
+    def get_data(self, data_callback):
         """Gets data from the devices.
 
         Data is retrieved from external devices and software and saves it in an
@@ -44,7 +59,7 @@ class DeviceInterface(object):
         function.
 
         Args:
-            data (function): Callback function with array parameter.
+            data_callback (function): Callback function with array parameter.
         """
 
         data_set = []
@@ -77,7 +92,7 @@ class DeviceInterface(object):
         else:
             data_set += [self._NA, self._NA]
 
-        data(data_set) # call callback function with dataset
+        data_callback(data_set) # call callback function with data set
 
 def main():
     """Runs as main if python file is not imported
