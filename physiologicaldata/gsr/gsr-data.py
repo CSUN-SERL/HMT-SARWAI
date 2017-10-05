@@ -1,9 +1,8 @@
-Sam Mouradian
+#Sam Mouradian
 """Capture GSR Values From Serial Port
 This module captures GSR values from ther serial and outputs them to the consolse.
-This module will be called by the data gatherer to log data into a file. 
-
-To read data from serial port, set port in def __init__ to the COM port that the device is connected to. 
+This module will be called by the data gatherer to log data into a file.
+To read data from serial port, set port in def __init__ to the COM port that the device is connected to.
 i.e,  def __init__(self, port= 'COM7'):
 """
 
@@ -36,8 +35,8 @@ FINISH_UPLOAD = chr(88)
 
 
 def bcd(l):
-""" Miscellaneous
-"""
+    """ Miscellaneous
+    """
     if [255, 255, 255] == l: return '-'
     num = ''
     for i in l:
@@ -60,8 +59,8 @@ def bcd(l):
 class Device(serial.Serial):
 
     def __init__(self, port= 'COM7'):
-    """def __init__ configures the devices and specifies a COM port to read from. 
-    """
+        """def __init__ configures the devices and specifies a COM port to read from.
+        """
         if not port:
             port = self.get_port()
         serial.Serial.__init__(
