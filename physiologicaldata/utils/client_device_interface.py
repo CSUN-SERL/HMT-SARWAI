@@ -26,9 +26,10 @@ class DeviceInterface(object):
 
         Device availability is determined.
         """
-        self._emotion_data = False
-        self._heart_data = True
-        self._gaze_data = True
+        self._emotion_status = True
+        self._heart_rate_status = True
+        self._gaze_status = True
+        self._gsr_status = True
 
     def __round_float(self, val):
         """Rounds floating point to the second decimal place.
@@ -47,7 +48,12 @@ class DeviceInterface(object):
             status_callback (function): Callback function with array parameter.
         """
 
-        status_set = [self._emotion_data, self._heart_data, self._gaze_data]
+        status_set = [
+            self._emotion_status,
+            self._heart_rate_status,
+            self._gaze_status,
+            self._gsr_status
+        ]
 
         status_callback(status_set) # call callback function with status set
 
@@ -64,7 +70,7 @@ class DeviceInterface(object):
 
         data_set = []
 
-        if self._emotion_data:
+        if self._emotion_status:
             emotions = {
                 'angry': random.uniform(0, 1),
                 'disgust': random.uniform(0, 1),
@@ -79,18 +85,23 @@ class DeviceInterface(object):
         else:
             data_set += [self._NA]
 
-        if self._heart_data:
+        if self._heart_rate_status:
             data_set += [int(random.uniform(60, 120))]
         else:
             data_set += [self._NA]
 
-        if self._gaze_data:
+        if self._gaze_status:
             data_set += [
                 int(random.uniform(0, 1920)),
                 int(random.uniform(0, 1080))
             ]
         else:
             data_set += [self._NA, self._NA]
+
+        if self._gsr_status:
+            data_set += [self.__round_float(random.uniform(0, 5))]
+        else:
+            data_set += [self._NA]
 
         data_callback(data_set) # call callback function with data set
 

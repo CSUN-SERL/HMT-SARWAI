@@ -10,7 +10,7 @@ from PyQt5 import QtWidgets
 #from PyQt5.QtWidgets import QFileDialog
 
 import main_window
-from data_gatherer import DataGatherer  
+from utils.data_gatherer import DataGatherer  
 
 def signal_handler(sig, frame):
     print('Do no use ctrl-c!')
@@ -68,12 +68,13 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
         self.emotion_output_label.setText('Emotion: {}'.format(data[0]))
         self.heart_output_label.setText('Heart: {}'.format(data[1]))
         self.gaze_output_label.setText('Gaze: ({}, {})'.format(data[2], data[3]))
+        self.gsr_output_label.setText('GSR: {}'.format(data[4]))
 
         if status[0] is True:
             self.emotion_label.setStyleSheet('color: green')
         else:
             self.emotion_label.setStyleSheet('color: red')
-        
+
         if status[1] is True:
             self.heart_label.setStyleSheet('color: green')
         else:
@@ -83,6 +84,12 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
             self.gaze_label.setStyleSheet('color: green')
         else:
             self.gaze_label.setStyleSheet('color: red')
+
+        if status[3] is True:
+            self.gsr_label.setStyleSheet('color: green')
+        else:
+            self.gsr_label.setStyleSheet('color: red')
+
 
     def __start_button(self):
         if not self._logging:
@@ -105,7 +112,7 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
             self.__data.save_log()
 
     def __reset_all_button(self):
-        self.__data.reset_all()
+        self.__data.reset_all_users()
 
     def __reset_user_button(self):
         self.__data.reset_user()

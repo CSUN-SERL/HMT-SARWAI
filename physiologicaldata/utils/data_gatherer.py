@@ -13,8 +13,8 @@ import os
 import shutil
 import time
 
-from logger import DataLogger
-from device_interface import DeviceInterface
+from utils.logger import DataLogger
+from utils.client_device_interface import DeviceInterface
 
 class DataGatherer(object):
     """Data Gatherer manages user data logging.
@@ -29,7 +29,7 @@ class DataGatherer(object):
             name (str): Contains name of user.
     """
 
-    _COLUMNS = ['emotion', 'bpm', 'Gx', 'Gy']
+    _COLUMNS = ['emotion', 'bpm', 'Gx', 'Gy', 'gsr']
 
     _log_status = False
 
@@ -115,7 +115,7 @@ class DataGatherer(object):
         if self._log_status:
             data_set = self._device_data
         else:
-            data_set = ['N/A', 'N/A', 'N/A', 'N/A']
+            data_set = ['N/A', 'N/A', 'N/A', 'N/A', 'N/A']
 
         data_callback(data_set, self._device_status)
 
