@@ -26,7 +26,7 @@ class DeviceInterface(object):
 
         Device availability is determined.
         """
-        self._emotion_data = True
+        self._emotion_data = False
         self._heart_data = True
         self._gaze_data = True
 

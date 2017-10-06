@@ -90,7 +90,7 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
             self.start_button.setEnabled(False)
             self.stop_button.setEnabled(True)
             self.save_button.setEnabled(False)
-            self.__data.start()
+            self.__data.start_log()
 
     def __stop_button(self):
         if self._logging:
@@ -98,11 +98,11 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
             self.start_button.setEnabled(True)
             self.stop_button.setEnabled(False)
             self.save_button.setEnabled(True)
-            self.__data.stop()
+            self.__data.stop_log()
 
     def __save_button(self):
         if not self._logging:
-            self.__data.save()
+            self.__data.save_log()
 
     def __reset_all_button(self):
         self.__data.reset_all()

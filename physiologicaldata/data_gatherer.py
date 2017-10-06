@@ -31,7 +31,7 @@ class DataGatherer(object):
 
     _COLUMNS = ['emotion', 'bpm', 'Gx', 'Gy']
 
-    _logging = False
+    _log_status = False
 
     def __init__(self, limit, rate):
         """Initializes DataGatherer.
@@ -50,7 +50,10 @@ class DataGatherer(object):
 
         # Start thread on thread_data method with name Thread-1
         try:
-            thread.start_new_thread(self.__thread_data, ('Thread-1', self._rate))
+            thread.start_new_thread(
+                self.__thread_data_stream,
+                ('Thread-1', self._rate)
+            )
         except Exception as e:
             print(e)
 
@@ -71,7 +74,7 @@ class DataGatherer(object):
             path='{}/{}'.format(self._path, self._user)
         )
 
-    def __thread_data(self, thread_name, rate):
+    def __thread_data_stream(self, thread_name, rate):
         """Thread method to capture data from device interface.
         """
 
@@ -80,7 +83,7 @@ class DataGatherer(object):
 
             self.__device_interface.get_status(self._device_status_callback)
 
-            if self._logging:
+            if self._log_status:
                 #print(thread_name)
                 self.__device_interface.get_data(self._device_data_callback)
 
@@ -109,14 +112,14 @@ class DataGatherer(object):
 
         data_set = []
 
-        if self._logging:
+        if self._log_status:
             data_set = self._device_data
         else:
             data_set = ['N/A', 'N/A', 'N/A', 'N/A']
 
         data_callback(data_set, self._device_status)
 
-    def start(self):
+    def start_log(self):
         """Start user data logging.
 
         Logging is set to true for the thread method to start logging.
@@ -126,9 +129,9 @@ class DataGatherer(object):
             print('User or path not set!')
             return
 
-        self._logging = True
+        self._log_status = True
 
-    def stop(self):
+    def stop_log(self):
         """Stop user data logging.
 
         Logging is set to false for the thread method to stop logging.
@@ -138,9 +141,9 @@ class DataGatherer(object):
             print('User or path not set!')
             return
 
-        self._logging = False
+        self._log_status = False
 
-    def save(self):
+    def save_log(self):
         """Saves user data.
         """
 
@@ -150,7 +153,7 @@ class DataGatherer(object):
 
         self.__data_log.save()
 
-    def reset_all(self):
+    def reset_all_users(self):
         """Resets logged data for all users.
 
         All user directories are deleted if users exist.
