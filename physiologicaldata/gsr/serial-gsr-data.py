@@ -3,7 +3,8 @@
 This module captures GSR values from ther serial and outputs them to the consolse.
 This module will be called by the data gatherer to log data into a file.
 To read data from serial port, set port in def __init__ to the COM port that the device is connected to.
-i.e,  def __init__(self, port= 'COM7'):
+i.e,  On Windows Machone : def __init__(self, port= 'COM7'):
+      On Linux Machine : def __init__(self, port = '/dev/ttyUsb0'
 """
 
 import serial
