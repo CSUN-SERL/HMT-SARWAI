@@ -29,7 +29,7 @@ class DataGatherer(object):
             name (str): Contains name of user.
     """
 
-    _COLUMNS = ['emotion', 'bpm', 'Gx', 'Gy', 'gsr']
+    _COLUMNS = ['Emotion', 'BPM', 'D-BPM', 'Gx', 'Gy', 'GSR']
 
     _log_status = False
 
@@ -115,7 +115,7 @@ class DataGatherer(object):
         if self._log_status:
             data_set = self._device_data
         else:
-            data_set = ['N/A', 'N/A', 'N/A', 'N/A', 'N/A']
+            data_set = ['N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A']
 
         data_callback(data_set, self._device_status)
 

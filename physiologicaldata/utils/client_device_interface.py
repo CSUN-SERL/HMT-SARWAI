@@ -11,6 +11,7 @@ from __future__ import absolute_import
 import random
 import operator
 import math
+import time
 
 class DeviceInterface(object):
     """Device Interface manages data from devices and software.
@@ -30,6 +31,9 @@ class DeviceInterface(object):
         self._heart_rate_status = True
         self._gaze_status = True
         self._gsr_status = True
+
+        self._previous_heart_rate = None
+        self._previous_time = None
 
     def __round_float(self, val):
         """Rounds floating point to the second decimal place.
@@ -86,8 +90,20 @@ class DeviceInterface(object):
             data_set += [self._NA]
 
         if self._heart_rate_status:
-            data_set += [int(random.uniform(60, 120))]
+            rate = int(random.uniform(60, 70))
+            data_set += [rate]
+
+            if self._previous_heart_rate is not None:
+                delta_heart_rate = abs(rate - self._previous_heart_rate)
+                #delta_time = time.time() - self._previous_time
+                #delta_time /= 60
+                self._previous_heart_rate = rate
+                #self._previous_time = time.time()
+                data_set += [delta_heart_rate]
+            else:
+                data_set += [self._NA]
         else:
+            data_set += [self._NA]
             data_set += [self._NA]
 
         if self._gaze_status:
@@ -102,6 +118,10 @@ class DeviceInterface(object):
             data_set += [self.__round_float(random.uniform(0, 5))]
         else:
             data_set += [self._NA]
+
+        if self._previous_heart_rate is None and isinstance(data_set[1], int):
+            self._previous_heart_rate = data_set[1]
+            self._previous_time = time.time()
 
         data_callback(data_set) # call callback function with data set
 

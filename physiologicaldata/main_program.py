@@ -67,8 +67,9 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
 
         self.emotion_output_label.setText('Emotion: {}'.format(data[0]))
         self.heart_output_label.setText('Heart: {}'.format(data[1]))
-        self.gaze_output_label.setText('Gaze: ({}, {})'.format(data[2], data[3]))
-        self.gsr_output_label.setText('GSR: {}'.format(data[4]))
+        self.delta_heart_output_label.setText('Delta Heart: {}'.format(data[2]))
+        self.gaze_output_label.setText('Gaze: ({}, {})'.format(data[3], data[4]))
+        self.gsr_output_label.setText('GSR: {}'.format(data[5]))
 
         if status[0] is True:
             self.emotion_label.setStyleSheet('color: green')
