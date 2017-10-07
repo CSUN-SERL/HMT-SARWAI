@@ -17,7 +17,6 @@ import urllib2
 from urllib2 import Request, URLError
 import json
 
-
 server_status_req = Request('http://localhost:22002/NeuLogAPI?GetSeverStatus')
 gsr_value_req = Request('http://localhost:22002/NeuLogAPI?GetSensorValue:[GSR],[1]')
 pulse_value_req = Request('http://localhost:22002/NeuLogAPI?GetSensorValue:[Pulse],[1]')
@@ -57,12 +56,10 @@ def get_pulse_value(object = pulse_value_req):
 
 def main():
 
-
     get_server_version()
-
     get_gsr_value()
-
     get_pulse_value()
 
 if __name__ == '__main__':
     main()
+      
