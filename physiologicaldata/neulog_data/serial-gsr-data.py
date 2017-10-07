@@ -1,4 +1,5 @@
-#Sam Mouradian
+#Author : Sam Mouradian
+
 """Capture GSR Values From Serial Port
 This module captures GSR values from ther serial and outputs them to the consolse.
 This module will be called by the data gatherer to log data into a file.
