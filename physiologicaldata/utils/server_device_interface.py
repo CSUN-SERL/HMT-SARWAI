@@ -105,8 +105,7 @@ class ServerDeviceInterface(object):
             else:
                 data_set += [self._NA]
         else:
-            data_set += [self._NA]
-            data_set += [self._NA]
+            data_set += [self._NA, self._NA]
 
         if self._gaze_status:
             data_set += [
@@ -138,7 +137,7 @@ def main():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     while True:
-        time.sleep(2)
+        time.sleep(0.1)
 
         data = {
             'data': device_interface.get_data(),

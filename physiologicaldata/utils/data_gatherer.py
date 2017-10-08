@@ -14,7 +14,7 @@ import shutil
 import time
 
 from utils.logger import DataLogger
-from utils.client_device_interface import DeviceInterface
+from utils.client_device_interface import ClientDeviceInterface
 
 class DataGatherer(object):
     """Data Gatherer manages user data logging.
@@ -46,7 +46,7 @@ class DataGatherer(object):
         self._device_data = None
         self._device_status = None
         self.__data_log = None
-        self.__device_interface = DeviceInterface()
+        self.__device_interface = ClientDeviceInterface()
 
         # Start thread on thread_data method with name Thread-1
         try:
@@ -80,25 +80,16 @@ class DataGatherer(object):
 
         while True:
             time.sleep(rate) # controls the data logging rate
-
-            self.__device_interface.get_status(self._device_status_callback)
-
-            if self._log_status:
-                #print(thread_name)
-                self.__device_interface.get_data(self._device_data_callback)
+            self.__device_interface.get_data(self._device_data_callback)
 
     def _device_data_callback(self, data):
         """_device_data_callback is a callback method for the device interface.
         """
 
-        self._device_data = data
-        self.__data_log.log(data)
-
-    def _device_status_callback(self, status):
-        """_device_status_callback is a callback method for the device interface.
-        """
-
-        self._device_status = status
+        self._device_data = data['data']
+        self._device_status = data['status']
+        if self._log_status:
+            self.__data_log.log(data['data'])
 
     def get_data(self, data_callback):
         """Gets data from the device interface.
@@ -111,13 +102,19 @@ class DataGatherer(object):
         """
 
         data_set = []
+        status_set = []
 
-        if self._log_status:
+        if self._log_status and self._device_data is not None:
             data_set = self._device_data
         else:
             data_set = ['N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A']
 
-        data_callback(data_set, self._device_status)
+        if self._device_status is not None:
+            status_set = self._device_status
+        else:
+            status_set = [False, False, False, False]
+
+        data_callback(data_set, status_set)
 
     def start_log(self):
         """Start user data logging.
