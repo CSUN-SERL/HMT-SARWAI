@@ -98,6 +98,8 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
             self.start_button.setEnabled(False)
             self.stop_button.setEnabled(True)
             self.save_button.setEnabled(False)
+            self.reset_all_button.setEnabled(False)
+            self.reset_user_button.setEnabled(False)
             self.__data.start_log()
 
     def __stop_button(self):
@@ -106,6 +108,8 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
             self.start_button.setEnabled(True)
             self.stop_button.setEnabled(False)
             self.save_button.setEnabled(True)
+            self.reset_all_button.setEnabled(True)
+            self.reset_user_button.setEnabled(True)
             self.__data.stop_log()
 
     def __save_button(self):

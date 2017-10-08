@@ -7,9 +7,6 @@ as a parameter through a callback function.
 from __future__ import print_function
 from __future__ import division
 from __future__ import absolute_import
-import random
-import operator
-import time
 import socket
 import json
 
