@@ -20,7 +20,7 @@ def signal_handler(sig, frame):
 signal.signal(signal.SIGINT, signal_handler)
 
 class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
-    _logging = False
+    _log_status = False
 
     def __init__(self, parent=None):
         super(MainProgram, self).__init__(parent)
@@ -42,8 +42,8 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
 
         try:
             thread.start_new_thread(self.__thread_realtime, ('Thread-1', 0.5))
-        except Exception as e:
-            print(e)
+        except Exception as err:
+            print(err)
 
     def __init_events(self):
         self.start_button.clicked.connect(self.__start_button)
@@ -95,8 +95,8 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
 
 
     def __start_button(self):
-        if not self._logging:
-            self._logging = True
+        if not self._log_status:
+            self._log_status = True
             self.start_button.setEnabled(False)
             self.stop_button.setEnabled(True)
             self.save_button.setEnabled(False)
@@ -105,8 +105,8 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
             self.__data.start_log()
 
     def __stop_button(self):
-        if self._logging:
-            self._logging = False
+        if self._log_status:
+            self._log_status = False
             self.start_button.setEnabled(True)
             self.stop_button.setEnabled(False)
             self.save_button.setEnabled(True)
@@ -115,7 +115,7 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
             self.__data.stop_log()
 
     def __save_button(self):
-        if not self._logging:
+        if not self._log_status:
             self.__data.save_log()
 
     def __reset_all_button(self):
