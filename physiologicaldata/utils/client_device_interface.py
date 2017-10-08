@@ -27,6 +27,7 @@ class ClientDeviceInterface(object):
         """
         self.__sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.__sock.bind((self._IP, self._PORT))
+        self.__sock.settimeout(2)
 
     def get_data(self, data_callback):
         """Gets data from the devices.
@@ -39,14 +40,18 @@ class ClientDeviceInterface(object):
             data_callback (function): Callback function with array parameter.
         """
 
-        json_data, _ = self.__sock.recvfrom(1024)
-        data_dict = json.loads(json_data.decode())
+        data_dict = {}
+        try:
+            json_data, _ = self.__sock.recvfrom(1024)
+            data_dict = json.loads(json_data.decode())
+        except socket.timeout as err:
+            print('Connection {}'.format(err))
 
-        #status_set = ['N/A', 'N/A', 'N/A', 'N/A']
-        #data_set = ['N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A']
-        #data_dict = {'data': data_set, 'status': status_set}
-
-        data_callback(data_dict) # call callback function with data set
+            status_set = [False, False, False, False]
+            data_set = ['N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A']
+            data_dict = {'data': data_set, 'status': status_set}
+        finally:
+            data_callback(data_dict) # call callback function with data set
 
 def main():
     """Runs as main if python file is not imported
