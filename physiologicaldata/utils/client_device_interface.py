@@ -17,7 +17,7 @@ class ClientDeviceInterface(object):
     callback function with the devices data.
     """
 
-    _IP = '127.0.0.1'
+    _IP = ''
     _PORT = 5005
 
     def __init__(self):
