@@ -4,12 +4,8 @@ from __future__ import print_function
 from __future__ import division
 from __future__ import absolute_import
 import time
-import signal
-import sys
 import socket
 import json
-import thread
-import cv2
 
 from utils.server_device_interface import ServerDeviceInterface
 
