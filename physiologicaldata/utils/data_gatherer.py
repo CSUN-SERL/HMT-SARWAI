@@ -13,8 +13,8 @@ import os
 import shutil
 import time
 
-from utils.logger import DataLogger
-from utils.client_device_interface import ClientDeviceInterface
+from .logger import DataLogger
+from .client_device_interface import ClientDeviceInterface
 
 class DataGatherer(object):
     """Data Gatherer manages user data logging.

@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """Retrieve data from external devices and software.
 
 This module retrieves data from devices and software (e.g. Emotion Detection,
@@ -14,8 +12,6 @@ import random
 import operator
 import math
 import time
-import socket
-import json
 
 class ServerDeviceInterface(object):
     """Device Interface manages data from devices and software.
@@ -129,23 +125,8 @@ class ServerDeviceInterface(object):
 def main():
     """Runs as main if python file is not imported
     """
-    IP = '127.0.0.1'
-    PORT = 5005
 
-    device_interface = ServerDeviceInterface()
-
-    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
-    while True:
-        time.sleep(0.1)
-
-        data = {
-            'data': device_interface.get_data(),
-            'status': device_interface.get_status()
-        }
-        json_str = json.dumps(data)
-        sock.sendto(json_str.encode(), (IP, PORT))
-
+    pass
 
 if __name__ == '__main__':
     main()
