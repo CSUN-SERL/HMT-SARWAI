@@ -49,12 +49,8 @@ class ClientDeviceInterface(object):
         except socket.timeout as err:
             print('Connection {}'.format(err))
 
-            #status_set = [False, False, False, False]
             data_set = ['N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A']
-            data_dict = {
-                'data': data_set
-                #'status': status_set
-            }
+            data_dict = {'data': data_set}
         finally:
             data_callback(data_dict)  # call callback function with data set
 

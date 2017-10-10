@@ -88,7 +88,6 @@ class DataGatherer(object):
         """
 
         self._device_data = data['data']
-        #self._device_status = data['status']
         if self._log_status:
             self.__data_log.log(self._device_data)
 
@@ -103,24 +102,13 @@ class DataGatherer(object):
         """
 
         data_set = []
-        #status_set = []
 
         if self._log_status and self._device_data is not None:
             data_set = self._device_data
         else:
             data_set = ['N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A']
 
-        '''
-        if self._device_status is not None:
-            status_set = self._device_status
-        else:
-            status_set = [False, False, False, False]
-        '''
-
-        data_callback(
-            data_set
-            #status_set
-        )
+        data_callback(data_set)
 
     def start_log(self):
         """Start user data logging.

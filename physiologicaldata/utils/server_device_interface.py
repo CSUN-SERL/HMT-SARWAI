@@ -33,12 +33,6 @@ class ServerDeviceInterface(object):
 
         Device availability is determined.
         """
-        '''
-        self._emotion_status = False
-        self._heart_rate_status = True
-        self._gaze_status = False
-        self._gsr_status = True
-        '''
 
         self._previous_heart_rate = None
         self._previous_time = None
@@ -48,27 +42,6 @@ class ServerDeviceInterface(object):
         """
 
         return math.ceil(val*100)/100
-
-    '''
-    def get_status(self):
-        """Gets status from the devices.
-
-        Status is retrieved from external devices and software and saves it in an
-        array.
-
-        Returns:
-            Dictionary: Contains device status.
-        """
-
-        status_set = [
-            self._emotion_status,
-            self._heart_rate_status,
-            self._gaze_status,
-            self._gsr_status
-        ]
-
-        return status_set
-    '''
 
     def get_data(self):
         """Gets data from the devices.

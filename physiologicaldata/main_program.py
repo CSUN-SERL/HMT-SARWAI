@@ -39,9 +39,9 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
         self.reset_user_button.setEnabled(False)
 
         self.emotion_label.setStyleSheet('color: red')
-        self.heart_label.setStyleSheet('color: red')
+        self.heart_label.setStyleSheet('color: green')
         self.gaze_label.setStyleSheet('color: red')
-        self.gsr_label.setStyleSheet('color: red')
+        self.gsr_label.setStyleSheet('color: green')
 
         self.video_stream_output.setScaledContents(True)
 
@@ -49,7 +49,6 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
 
         try:
             thread.start_new_thread(self.__thread_realtime, ('Thread-1', 0.5))
-            thread.start_new_thread(self.__thread_video_stream, ('Thread-2',))
         except Exception as err:
             print(err)
 
@@ -62,7 +61,9 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
         self.set_user_button.clicked.connect(self.__set_user_button)
         #self.set_path_button.clicked.connect(self.__set_path_button)
 
-    def __thread_video_stream(self, thread_name):
+    def __thread_realtime(self, thread_name, rate):
+        """Thread method to capture data from device interface.
+        """
         # change to video stream ip
         stream = urllib.urlopen('http://192.168.1.45:8081/video.mjpg')
         bytes_data = ''
@@ -90,13 +91,6 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
                 img = QtGui.QPixmap.fromImage(img)
                 self.video_stream_output.setPixmap(img)
 
-    def __thread_realtime(self, thread_name, rate):
-        """Thread method to capture data from device interface.
-        """
-
-        while True:
-            time.sleep(rate) # controls the data logging rate
-            #print(thread_name)
             self.__data.get_data(self._data_callback)
 
     def _data_callback(self, data):
@@ -109,6 +103,7 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
         self.gaze_output_label.setText('Gaze: ({}, {})'.format(data[3], data[4]))
         self.gsr_output_label.setText('GSR: {}'.format(data[5]))
 
+        '''
         if not isinstance(data[0], str):
             self.emotion_label.setStyleSheet('color: green')
         else:
@@ -128,6 +123,7 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
             self.gsr_label.setStyleSheet('color: green')
         else:
             self.gsr_label.setStyleSheet('color: red')
+        '''
 
 
     def __start_button(self):
