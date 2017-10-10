@@ -38,7 +38,7 @@ def get_server_version(object = server_status_req):
     try:
         response = urllib2.urlopen(object).read()
         server_connect = json.loads(response)
-        print server_connect['GetSeverStatus']
+        return server_connect['GetSeverStatus']
     except URLError, e:
         print 'Error: No Response From Server.'
 
