@@ -12,7 +12,8 @@ import urllib
 import numpy as np
 import cv2
 #import os
-from PyQt5 import QtWidgets, QtGui
+from PyQt5 import QtGui
+from PyQt5 import QtWidgets
 #from PyQt5.QtWidgets import QFileDialog
 
 import main_window
