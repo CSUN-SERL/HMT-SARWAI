@@ -14,6 +14,11 @@ import operator
 import random
 import time
 
+# FOR LINUX
+from neulog_data import neulog_api
+# FOR WINDOWS
+#from physiologicaldata.neulog_data import neulog_api
+
 class ServerDeviceInterface(object):
     """Device Interface manages data from devices and software.
 
@@ -28,9 +33,9 @@ class ServerDeviceInterface(object):
 
         Device availability is determined.
         """
-        self._emotion_status = True
+        self._emotion_status = False
         self._heart_rate_status = True
-        self._gaze_status = True
+        self._gaze_status = False
         self._gsr_status = True
 
         self._previous_heart_rate = None
@@ -89,7 +94,7 @@ class ServerDeviceInterface(object):
             data_set += [self._NA]
 
         if self._heart_rate_status:
-            rate = int(random.uniform(60, 70))
+            rate = neulog_api.get_pulse_value()
             data_set += [rate]
 
             if self._previous_heart_rate is not None:
@@ -113,7 +118,8 @@ class ServerDeviceInterface(object):
             data_set += [self._NA, self._NA]
 
         if self._gsr_status:
-            data_set += [self.__round_float(random.uniform(0, 5))]
+            gsr_data = neulog_api.get_gsr_value()
+            data_set += [gsr_data]
         else:
             data_set += [self._NA]
 

@@ -45,11 +45,11 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
 
         self.video_stream_output.setScaledContents(True)
 
-        self.__data = DataGatherer(1000, 0.1)
+        self.__data = DataGatherer(1000, 0.3)
 
         try:
             thread.start_new_thread(self.__thread_realtime, ('Thread-1', 0.5))
-            thread.start_new_thread(self.__thread_video_stream, ('Thread-2',))
+            #thread.start_new_thread(self.__thread_video_stream, ('Thread-2',))
         except Exception as err:
             print(err)
 
