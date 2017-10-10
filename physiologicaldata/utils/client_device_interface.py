@@ -25,9 +25,9 @@ class ClientDeviceInterface(object):
 
         Device availability is determined.
         """
-        self.__sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.__sock.bind((self._IP, self._PORT))
-        self.__sock.settimeout(2)
+        self._SOCK = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self._SOCK.bind((self._IP, self._PORT))
+        self._SOCK.settimeout(2)
 
     def get_data(self, data_callback):
         """Gets data from the devices.
@@ -42,7 +42,7 @@ class ClientDeviceInterface(object):
 
         data_dict = {}
         try:
-            json_data, _ = self.__sock.recvfrom(1024)
+            json_data, _ = self._SOCK.recvfrom(1024)
             data_dict = json.loads(json_data.decode())
         except socket.timeout as err:
             print('Connection {}'.format(err))

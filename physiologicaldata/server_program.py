@@ -12,7 +12,7 @@ from utils.server_device_interface import ServerDeviceInterface
 IP = '127.0.0.1'
 PORT = 5005
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+SOCK = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 def main():
     """Runs as main if python file is not imported
@@ -28,7 +28,7 @@ def main():
             'status': device_interface.get_status()
         }
         json_str = json.dumps(data)
-        sock.sendto(json_str.encode(), (IP, PORT))
+        SOCK.sendto(json_str.encode(), (IP, PORT))
 
 if __name__ == '__main__':
     main()
