@@ -76,6 +76,7 @@ class Ui_MainWindow(object):
         self.delta_heart_output_label.setObjectName("delta_heart_output_label")
         self.video_stream_output = QtWidgets.QLabel(self.centralwidget)
         self.video_stream_output.setGeometry(QtCore.QRect(16, 16, 401, 291))
+        self.video_stream_output.setAlignment(QtCore.Qt.AlignCenter)
         self.video_stream_output.setObjectName("video_stream_output")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -110,5 +111,5 @@ class Ui_MainWindow(object):
         self.reset_user_button.setText(_translate("MainWindow", "Reset User"))
         self.reset_all_button.setText(_translate("MainWindow", "Reset All"))
         self.delta_heart_output_label.setText(_translate("MainWindow", "Delta Heart: N/A"))
-        self.video_stream_output.setText(_translate("MainWindow", "TextLabel"))
+        self.video_stream_output.setText(_translate("MainWindow", "Stream N/A"))
 
