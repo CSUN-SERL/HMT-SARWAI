@@ -4,11 +4,12 @@ This module retrieves data from server device interface and sends the data
 as a parameter through a callback function.
 """
 
-from __future__ import print_function
-from __future__ import division
 from __future__ import absolute_import
-import socket
+from __future__ import division
+from __future__ import print_function
+
 import json
+import socket
 
 class ClientDeviceInterface(object):
     """Device Interface manages data from devices and software.
@@ -17,7 +18,7 @@ class ClientDeviceInterface(object):
     callback function with the devices data.
     """
 
-    _IP = '' # DO NOT CHANGE
+    _IP = ''  # DO NOT CHANGE
     _PORT = 5005
 
     def __init__(self):
@@ -52,7 +53,7 @@ class ClientDeviceInterface(object):
             data_set = ['N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A']
             data_dict = {'data': data_set, 'status': status_set}
         finally:
-            data_callback(data_dict) # call callback function with data set
+            data_callback(data_dict)  # call callback function with data set
 
 def main():
     """Runs as main if python file is not imported

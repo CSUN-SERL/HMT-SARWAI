@@ -5,16 +5,17 @@ can be added by logging data for that user and deleted by reseting all users
 or one particular user.
 """
 
-from __future__ import print_function
-from __future__ import division
 from __future__ import absolute_import
-import thread
+from __future__ import division
+from __future__ import print_function
+
 import os
 import shutil
+import thread
 import time
 
-from .logger import DataLogger
 from .client_device_interface import ClientDeviceInterface
+from .logger import DataLogger
 
 class DataGatherer(object):
     """Data Gatherer manages user data logging.
@@ -41,7 +42,7 @@ class DataGatherer(object):
 
         self._limit = limit
         self._rate = rate
-        self._path = 'user_data' # '/home/danny/Desktop/user_data'
+        self._path = 'user_data'  # '/home/danny/Desktop/user_data'
         self._user = None
         self._device_data = None
         self._device_status = None
@@ -79,7 +80,7 @@ class DataGatherer(object):
         """
 
         while True:
-            time.sleep(rate) # controls the data logging rate
+            time.sleep(rate)  # controls the data logging rate
             self.__device_interface.get_data(self._device_data_callback)
 
     def _device_data_callback(self, data):
@@ -162,7 +163,7 @@ class DataGatherer(object):
 
         print('Deleting all users.')
         user_dirs = os.listdir(self._path)
-        for folder in user_dirs: # delete all existing user directories
+        for folder in user_dirs:  # delete all existing user directories
             shutil.rmtree('{}/{}'.format(self._path, folder))
 
 

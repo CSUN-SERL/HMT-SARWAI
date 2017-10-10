@@ -5,12 +5,13 @@ Heart Rate, Gaze Tracking, and Galvanic Skin Response), and sends the data
 using network sockets.
 """
 
-from __future__ import print_function
-from __future__ import division
 from __future__ import absolute_import
-import random
-import operator
+from __future__ import division
+from __future__ import print_function
+
 import math
+import operator
+import random
 import time
 
 class ServerDeviceInterface(object):
@@ -20,7 +21,7 @@ class ServerDeviceInterface(object):
     function with the devices data.
     """
 
-    _NA = 'N/A' # specifies the output if a device is not available
+    _NA = 'N/A'  # specifies the output if a device is not available
 
     def __init__(self):
         """Initializes DeviceInterface.

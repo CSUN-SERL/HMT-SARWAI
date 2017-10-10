@@ -5,11 +5,12 @@ then used to save the data into time-stamped csv files inside time-stamped
 folders of the current session.
 """
 
-from __future__ import print_function
-from __future__ import division
 from __future__ import absolute_import
-import os
+from __future__ import division
+from __future__ import print_function
+
 import datetime
+import os
 import pandas as pd
 
 class DataLogger(object):
@@ -37,7 +38,7 @@ class DataLogger(object):
             raise ValueError('\'columns\' argument is empty.')
 
         self._log_limit = limit
-        self._log_count = 0 # keeps count of logging attempts
+        self._log_count = 0  # keeps count of logging attempts
         self._columns = ['timestamp'] + columns
         self._path = path
         self.__df = pd.DataFrame({}, columns=self._columns)
@@ -59,7 +60,7 @@ class DataLogger(object):
             data (dictionary): Contains a dictionary of strings.
         """
 
-        if self.__df is None: # Reinitialize the dataframe if it's None
+        if self.__df is None:  # Reinitialize the dataframe if it's None
             self.__df = pd.DataFrame({}, columns=self._columns)
             print('New dataframe initialized')
 

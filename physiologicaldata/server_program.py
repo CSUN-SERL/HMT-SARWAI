@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
-from __future__ import print_function
-from __future__ import division
 from __future__ import absolute_import
-import time
-import socket
+from __future__ import division
+from __future__ import print_function
+
 import json
+import socket
+import time
 
 from utils.server_device_interface import ServerDeviceInterface
 
-IP = '127.0.0.1' # change to target computer
+IP = '127.0.0.1'  # change to target computer
 PORT = 5005
 
 SOCK = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
