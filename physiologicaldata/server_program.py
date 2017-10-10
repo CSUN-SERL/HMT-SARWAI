@@ -29,6 +29,8 @@ def main():
             'status': device_interface.get_status()
         }
         json_str = json.dumps(data)
+        print(json_str)
+
         SOCK.sendto(json_str.encode(), (IP, PORT))
 
 if __name__ == '__main__':
