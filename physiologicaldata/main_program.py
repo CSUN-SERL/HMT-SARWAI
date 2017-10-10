@@ -61,6 +61,7 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
         #self.set_path_button.clicked.connect(self.__set_path_button)
 
     def __thread_video_stream(self, thread_name):
+        # change to video stream ip
         stream = urllib.urlopen('http://96.10.1.168/mjpg/1/video.mjpg')
         bytes_data = ''
 

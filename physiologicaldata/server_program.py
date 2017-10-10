@@ -9,7 +9,7 @@ import json
 
 from utils.server_device_interface import ServerDeviceInterface
 
-IP = '127.0.0.1'
+IP = '127.0.0.1' # change to target computer
 PORT = 5005
 
 SOCK = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
