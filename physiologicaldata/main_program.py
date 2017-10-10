@@ -7,8 +7,11 @@ import sys
 import signal
 import time
 import thread
+import urllib
+import numpy as np
+import cv2
 #import os
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtGui
 #from PyQt5.QtWidgets import QFileDialog
 
 import main_window
@@ -38,10 +41,13 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
         self.gaze_label.setStyleSheet('color: red')
         self.gsr_label.setStyleSheet('color: red')
 
+        self.video_stream_output.setScaledContents(True)
+
         self.__data = DataGatherer(1000, 0.1)
 
         try:
             thread.start_new_thread(self.__thread_realtime, ('Thread-1', 0.5))
+            thread.start_new_thread(self.__thread_video_stream, ('Thread-2',))
         except Exception as err:
             print(err)
 
@@ -53,6 +59,33 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
         self.reset_user_button.clicked.connect(self.__reset_user_button)
         self.set_user_button.clicked.connect(self.__set_user_button)
         #self.set_path_button.clicked.connect(self.__set_path_button)
+
+    def __thread_video_stream(self, thread_name):
+        stream = urllib.urlopen('http://96.10.1.168/mjpg/1/video.mjpg')
+        bytes_data = ''
+
+        while True:
+            bytes_data += stream.read(1024)
+            xd8 = bytes_data.find('\xff\xd8')
+            xd9 = bytes_data.find('\xff\xd9')
+            if xd8 != -1 and xd9 != -1:
+                jpg = bytes_data[xd8:xd9+2]
+                bytes_data = bytes_data[xd9+2:]
+                frame = cv2.imdecode(
+                    np.fromstring(jpg, dtype=np.uint8),
+                    cv2.IMREAD_COLOR
+                )
+                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+                height, width = frame.shape[:2]
+                img = QtGui.QImage(
+                    frame,
+                    width,
+                    height,
+                    QtGui.QImage.Format_RGB888
+                )
+                img = QtGui.QPixmap.fromImage(img)
+                self.video_stream_output.setPixmap(img)
 
     def __thread_realtime(self, thread_name, rate):
         """Thread method to capture data from device interface.
