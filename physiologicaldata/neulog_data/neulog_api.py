@@ -12,10 +12,10 @@
    Then you may modify the below API calls to include the correct localhost port number.
 """
 
-
-import urllib2
-from urllib2 import Request, URLError
 import json
+import urllib2
+from urllib2 import Request
+from urllib2 import URLError
 
 localhost_port_num = '22002'
 server_status_req = Request('http://localhost:22002/NeuLogAPI?GetSeverStatus')
@@ -23,12 +23,12 @@ gsr_value_req = Request('http://localhost:22002/NeuLogAPI?GetSensorValue:[GSR],[
 pulse_value_req = Request('http://localhost:22002/NeuLogAPI?GetSensorValue:[Pulse],[1]')
 
 def get_localhost_port():
-    """Get localhost port number from User.
+    """ Get localhost port number from User.
     """
     localhost_port = input("Please Enter Localhost Port Number (i.e '22002') ")
     global localhost_port_num
     localhost_port_num = localhost_port
-    print(localhost_port_num)
+    return localhost_port_num
     
 
 def get_server_version(object = server_status_req):
@@ -49,7 +49,7 @@ def get_gsr_value(object = gsr_value_req):
     try:
         response = urllib2.urlopen(object).read()
         gsr_value = json.loads(response)
-        print gsr_value['GetSensorValue'][0]
+        return gsr_value['GetSensorValue'][0]
     except URLError, e:
         print 'Error: No GSR Value.'
 
@@ -60,7 +60,7 @@ def get_pulse_value(object = pulse_value_req):
     try:
         response = urllib2.urlopen(object).read()
         pulse_value = json.loads(response)
-        print pulse_value['GetSensorValue'][0]
+        return pulse_value['GetSensorValue'][0]
     except URLError, e:
         print 'Error: No Heartrate Value.'
 
