@@ -49,7 +49,7 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
 
         try:
             thread.start_new_thread(self.__thread_realtime, ('Thread-1', 0.5))
-            #thread.start_new_thread(self.__thread_video_stream, ('Thread-2',))
+            thread.start_new_thread(self.__thread_video_stream, ('Thread-2',))
         except Exception as err:
             print(err)
 
@@ -64,7 +64,7 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
 
     def __thread_video_stream(self, thread_name):
         # change to video stream ip
-        stream = urllib.urlopen('http://96.10.1.168/mjpg/1/video.mjpg')
+        stream = urllib.urlopen('http://192.168.1.45:8081/video.mjpg')
         bytes_data = ''
 
         while True:
@@ -99,7 +99,7 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
             #print(thread_name)
             self.__data.get_data(self._data_callback)
 
-    def _data_callback(self, data, status):
+    def _data_callback(self, data):
         """_data is a callback method for the data gatherer.
         """
 
@@ -109,22 +109,22 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
         self.gaze_output_label.setText('Gaze: ({}, {})'.format(data[3], data[4]))
         self.gsr_output_label.setText('GSR: {}'.format(data[5]))
 
-        if status[0] is True:
+        if not isinstance(data[0], str):
             self.emotion_label.setStyleSheet('color: green')
         else:
             self.emotion_label.setStyleSheet('color: red')
 
-        if status[1] is True:
+        if not isinstance(data[1], str):
             self.heart_label.setStyleSheet('color: green')
         else:
             self.heart_label.setStyleSheet('color: red')
 
-        if status[2] is True:
+        if not isinstance(data[3], str):
             self.gaze_label.setStyleSheet('color: green')
         else:
             self.gaze_label.setStyleSheet('color: red')
 
-        if status[3] is True:
+        if not isinstance(data[5], str):
             self.gsr_label.setStyleSheet('color: green')
         else:
             self.gsr_label.setStyleSheet('color: red')

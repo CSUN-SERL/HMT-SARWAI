@@ -25,8 +25,8 @@ def main():
         time.sleep(0.1)
 
         data = {
-            'data': device_interface.get_data(),
-            'status': device_interface.get_status()
+            'data': device_interface.get_data()
+            #'status': device_interface.get_status()
         }
         json_str = json.dumps(data)
         print(json_str)

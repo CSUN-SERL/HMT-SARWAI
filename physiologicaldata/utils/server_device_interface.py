@@ -33,10 +33,12 @@ class ServerDeviceInterface(object):
 
         Device availability is determined.
         """
+        '''
         self._emotion_status = False
         self._heart_rate_status = True
         self._gaze_status = False
         self._gsr_status = True
+        '''
 
         self._previous_heart_rate = None
         self._previous_time = None
@@ -47,6 +49,7 @@ class ServerDeviceInterface(object):
 
         return math.ceil(val*100)/100
 
+    '''
     def get_status(self):
         """Gets status from the devices.
 
@@ -65,6 +68,7 @@ class ServerDeviceInterface(object):
         ]
 
         return status_set
+    '''
 
     def get_data(self):
         """Gets data from the devices.
@@ -78,7 +82,8 @@ class ServerDeviceInterface(object):
 
         data_set = []
 
-        if self._emotion_status:
+        emotion = None
+        if emotion is not None:
             emotions = {
                 'angry': random.uniform(0, 1),
                 'disgust': random.uniform(0, 1),
@@ -93,8 +98,8 @@ class ServerDeviceInterface(object):
         else:
             data_set += [self._NA]
 
-        if self._heart_rate_status:
-            rate = neulog_api.get_pulse_value()
+        rate = neulog_api.get_pulse_value()
+        if isinstance(rate, int) or isinstance(rate, float):
             data_set += [rate]
 
             if self._previous_heart_rate is not None:
@@ -109,7 +114,8 @@ class ServerDeviceInterface(object):
         else:
             data_set += [self._NA, self._NA]
 
-        if self._gaze_status:
+        gaze = None
+        if gaze is not None:
             data_set += [
                 int(random.uniform(0, 1920)),
                 int(random.uniform(0, 1080))
@@ -117,9 +123,9 @@ class ServerDeviceInterface(object):
         else:
             data_set += [self._NA, self._NA]
 
-        if self._gsr_status:
-            gsr_data = neulog_api.get_gsr_value()
-            data_set += [gsr_data]
+        gsr = neulog_api.get_gsr_value()
+        if isinstance(gsr, float):
+            data_set += [gsr]
         else:
             data_set += [self._NA]
 
