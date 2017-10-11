@@ -38,7 +38,7 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
         self.reset_all_button.setEnabled(False)
         self.reset_user_button.setEnabled(False)
 
-        self.emotion_label.setStyleSheet('color: red')
+        self.emotion_label.setStyleSheet('color: green')
         self.heart_label.setStyleSheet('color: green')
         self.gaze_label.setStyleSheet('color: red')
         self.gsr_label.setStyleSheet('color: green')

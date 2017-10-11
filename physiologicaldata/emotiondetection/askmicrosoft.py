@@ -42,18 +42,32 @@ def ask_microsoft(frame, key='9984e8855e1d4c2cae3b3e3e2b861203'):
     json = None
     params = None
     result = process_request(json, data_array, headers, params)
-    emotion_list = [result[0]['scores']['sadness'],
-                    result[0]['scores']['neutral'],
-                    result[0]['scores']['contempt'],
-                    result[0]['scores']['disgust'],
-                    result[0]['scores']['anger'],
-                    result[0]['scores']['surprise'],
-                    result[0]['scores']['fear'],
-                    result[0]['scores']['happiness']]
-    if emotion_list is not None:
+    if result:
+        '''
+        emotion_list = [
+            result[0]['scores']['sadness'],
+            result[0]['scores']['neutral'],
+            result[0]['scores']['contempt'],
+            result[0]['scores']['disgust'],
+            result[0]['scores']['anger'],
+            result[0]['scores']['surprise'],
+            result[0]['scores']['fear'],
+            result[0]['scores']['happiness']
+        ]
+        '''
+        emotion_list = {
+                'sad': result[0]['scores']['sadness'],
+                'neutral': result[0]['scores']['neutral'],
+                'contempt': result[0]['scores']['contempt'],
+                'disgusted': result[0]['scores']['disgust'],
+                'angry': result[0]['scores']['anger'],
+                'surprised': result[0]['scores']['surprise'],
+                'fear': result[0]['scores']['fear'],
+                'happy': result[0]['scores']['happiness']
+            }
         return emotion_list
     else:
-        return []
+        return None
 
 def process_request(json, data, headers, params):
     """

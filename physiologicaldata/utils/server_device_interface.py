@@ -13,6 +13,11 @@ import math
 import operator
 import random
 import time
+import urllib
+import numpy as np
+import cv2
+
+from emotiondetection.askmicrosoft import ask_microsoft
 
 # FOR LINUX
 from neulog_data import neulog_api
@@ -55,17 +60,28 @@ class ServerDeviceInterface(object):
 
         data_set = []
 
-        emotion = None
-        if emotion is not None:
-            emotions = {
-                'angry': random.uniform(0, 1),
-                'disgust': random.uniform(0, 1),
-                'fear': random.uniform(0, 1),
-                'happy': random.uniform(0, 1),
-                'sad': random.uniform(0, 1),
-                'surprise': random.uniform(0, 1),
-                'neutral': random.uniform(0, 1)
-            }
+        # change to video stream ip
+        stream = urllib.urlopen('http://192.168.1.45:8081/video.mjpg')
+
+        bytes_data = ''
+
+        frame = []
+        while True:
+            bytes_data += stream.read(1024)
+            xd8 = bytes_data.find('\xff\xd8')
+            xd9 = bytes_data.find('\xff\xd9')
+            if xd8 != -1 and xd9 != -1:
+                jpg = bytes_data[xd8:xd9+2]
+                bytes_data = bytes_data[xd9+2:]
+                frame = cv2.imdecode(
+                    np.fromstring(jpg, dtype=np.uint8),
+                    cv2.IMREAD_COLOR
+                )
+                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                break
+
+        emotions = ask_microsoft(frame, 'API KEY')
+        if emotions is not None:
             # get emotion key based on highest value.
             data_set += [max(emotions.iteritems(), key=operator.itemgetter(1))[0]]
         else:
