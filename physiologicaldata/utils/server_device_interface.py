@@ -42,7 +42,7 @@ class ServerDeviceInterface(object):
         self._start_time = None
 
         self._emotion = None
-        self._api_key = '6d0f0d6f3a3e4be78d4e97bed4a0b53b'
+        self._api_key = 'API_KEY'
 
         self._previous_heart_rate = None
         self._previous_time = None

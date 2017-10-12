@@ -66,7 +66,7 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
         """
         # change to video stream ip
         video_stream = urllib.urlopen('http://192.168.1.45:8081/video.mjpg')
-        desktop_stream = urllib.urlopen('http://192.168.1.45:8082/video.mjpg')
+        desktop_stream = urllib.urlopen('http://192.168.1.45:8081/video.mjpg')
         video_bytes_data = ''
         desktop_bytes_data = ''
 
