@@ -39,6 +39,11 @@ class ServerDeviceInterface(object):
         Device availability is determined.
         """
 
+        self._start_time = None
+
+        self._emotion = None
+        self._api_key = '6d0f0d6f3a3e4be78d4e97bed4a0b53b'
+
         self._previous_heart_rate = None
         self._previous_time = None
 
@@ -80,10 +85,17 @@ class ServerDeviceInterface(object):
                 frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 break
 
-        emotions = ask_microsoft(frame, 'API KEY')
-        if emotions is not None:
+        if self._start_time is None:
+            self._emotion = ask_microsoft(frame, self._api_key)
+            self._start_time = time.time()
+
+        if (time.time() - self._start_time) > 15:
+            self._emotion = ask_microsoft(frame, self._api_key)
+            self._start_time = time.time()
+
+        if self._emotion is not None:
             # get emotion key based on highest value.
-            data_set += [max(emotions.iteritems(), key=operator.itemgetter(1))[0]]
+            data_set += [max(self._emotion.iteritems(), key=operator.itemgetter(1))[0]]
         else:
             data_set += [self._NA]
 
