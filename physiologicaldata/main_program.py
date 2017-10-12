@@ -65,16 +65,18 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
         """Thread method to capture data from device interface.
         """
         # change to video stream ip
-        stream = urllib.urlopen('http://192.168.1.45:8081/video.mjpg')
-        bytes_data = ''
+        video_stream = urllib.urlopen('http://192.168.1.45:8081/video.mjpg')
+        desktop_stream = urllib.urlopen('http://192.168.1.45:8082/video.mjpg')
+        video_bytes_data = ''
+        desktop_bytes_data = ''
 
         while True:
-            bytes_data += stream.read(1024)
-            xd8 = bytes_data.find('\xff\xd8')
-            xd9 = bytes_data.find('\xff\xd9')
+            video_bytes_data += video_stream.read(1024)
+            xd8 = video_bytes_data.find('\xff\xd8')
+            xd9 = video_bytes_data.find('\xff\xd9')
             if xd8 != -1 and xd9 != -1:
-                jpg = bytes_data[xd8:xd9+2]
-                bytes_data = bytes_data[xd9+2:]
+                jpg = video_bytes_data[xd8:xd9+2]
+                video_bytes_data = video_bytes_data[xd9+2:]
                 frame = cv2.imdecode(
                     np.fromstring(jpg, dtype=np.uint8),
                     cv2.IMREAD_COLOR
@@ -90,6 +92,28 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
                 )
                 img = QtGui.QPixmap.fromImage(img)
                 self.video_stream_output.setPixmap(img)
+
+            desktop_bytes_data += desktop_stream.read(1024)
+            xd8 = desktop_bytes_data.find('\xff\xd8')
+            xd9 = desktop_bytes_data.find('\xff\xd9')
+            if xd8 != -1 and xd9 != -1:
+                jpg = desktop_bytes_data[xd8:xd9+2]
+                desktop_bytes_data = desktop_bytes_data[xd9+2:]
+                frame = cv2.imdecode(
+                    np.fromstring(jpg, dtype=np.uint8),
+                    cv2.IMREAD_COLOR
+                )
+                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+                height, width = frame.shape[:2]
+                img = QtGui.QImage(
+                    frame,
+                    width,
+                    height,
+                    QtGui.QImage.Format_RGB888
+                )
+                img = QtGui.QPixmap.fromImage(img)
+                self.desktop_stream_output.setPixmap(img)
 
             self.__data.get_data(self._data_callback)
 
