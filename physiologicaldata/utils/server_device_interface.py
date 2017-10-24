@@ -53,6 +53,34 @@ class ServerDeviceInterface(object):
 
         return math.ceil(val*100)/100
 
+    def __get_stream_frame(self):
+        frame = []
+
+        try:
+            # change to video stream ip
+            stream = urllib.urlopen('http://192.168.1.45:8081/video.mjpg')
+
+            bytes_data = ''
+
+            while True:
+                bytes_data += stream.read(1024)
+                xd8 = bytes_data.find('\xff\xd8')
+                xd9 = bytes_data.find('\xff\xd9')
+                if xd8 != -1 and xd9 != -1:
+                    jpg = bytes_data[xd8:xd9+2]
+                    bytes_data = bytes_data[xd9+2:]
+                    frame = cv2.imdecode(
+                        np.fromstring(jpg, dtype=np.uint8),
+                        cv2.IMREAD_COLOR
+                    )
+                    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                    break
+        except Exception as err:
+            print(err)
+            frame = None
+
+        return frame
+
     def get_data(self):
         """Gets data from the devices.
 
@@ -64,33 +92,22 @@ class ServerDeviceInterface(object):
         """
 
         data_set = []
-
-        # change to video stream ip
-        stream = urllib.urlopen('http://192.168.1.45:8081/video.mjpg')
-
-        bytes_data = ''
-
-        frame = []
-        while True:
-            bytes_data += stream.read(1024)
-            xd8 = bytes_data.find('\xff\xd8')
-            xd9 = bytes_data.find('\xff\xd9')
-            if xd8 != -1 and xd9 != -1:
-                jpg = bytes_data[xd8:xd9+2]
-                bytes_data = bytes_data[xd9+2:]
-                frame = cv2.imdecode(
-                    np.fromstring(jpg, dtype=np.uint8),
-                    cv2.IMREAD_COLOR
-                )
-                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                break
+        frame = self.__get_stream_frame()
 
         if self._start_time is None:
-            self._emotion = ask_microsoft(frame, self._api_key)
+            if frame:
+                self._emotion = ask_microsoft(frame, self._api_key)
+            else:
+                self._emotion = None
+
             self._start_time = time.time()
 
         if (time.time() - self._start_time) > 15:
-            self._emotion = ask_microsoft(frame, self._api_key)
+            if frame:
+                self._emotion = ask_microsoft(frame, self._api_key)
+            else:
+                self._emotion = None
+
             self._start_time = time.time()
 
         if self._emotion is not None:
@@ -105,10 +122,7 @@ class ServerDeviceInterface(object):
 
             if self._previous_heart_rate is not None:
                 delta_heart_rate = abs(rate - self._previous_heart_rate)
-                #delta_time = time.time() - self._previous_time
-                #delta_time /= 60
                 self._previous_heart_rate = rate
-                #self._previous_time = time.time()
                 data_set += [delta_heart_rate]
             else:
                 data_set += [self._NA]

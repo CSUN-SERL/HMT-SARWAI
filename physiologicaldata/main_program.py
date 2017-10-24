@@ -14,6 +14,7 @@ import cv2
 #import os
 from PyQt5 import QtGui
 from PyQt5 import QtWidgets
+#from PyQt5 import QtCore
 #from PyQt5.QtWidgets import QFileDialog
 
 import main_window
@@ -44,6 +45,9 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
         self.gsr_label.setStyleSheet('color: green')
 
         self.video_stream_output.setScaledContents(True)
+        self.desktop_stream_output.setScaledContents(True)
+
+        #self.__settings = QtCore.QSettings('CSUN', 'PhysiologicalData')
 
         self.__data = DataGatherer(1000, 0.3)
 
@@ -61,59 +65,57 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
         self.set_user_button.clicked.connect(self.__set_user_button)
         #self.set_path_button.clicked.connect(self.__set_path_button)
 
+    def __get_stream_frame(self, url):
+        frame = []
+
+        try:
+            # change to video stream ip
+            stream = urllib.urlopen(url)
+
+            bytes_data = ''
+
+            while True:
+                bytes_data += stream.read(1024)
+                xd8 = bytes_data.find('\xff\xd8')
+                xd9 = bytes_data.find('\xff\xd9')
+                if xd8 != -1 and xd9 != -1:
+                    jpg = bytes_data[xd8:xd9+2]
+                    bytes_data = bytes_data[xd9+2:]
+                    frame = cv2.imdecode(
+                        np.fromstring(jpg, dtype=np.uint8),
+                        cv2.IMREAD_COLOR
+                    )
+                    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+                    height, width = frame.shape[:2]
+                    img = QtGui.QImage(
+                        frame,
+                        width,
+                        height,
+                        QtGui.QImage.Format_RGB888
+                    )
+                    img = QtGui.QPixmap.fromImage(img)
+
+                    break
+        except Exception as err:
+            frame = None
+
+        return frame
+
     def __thread_realtime(self, thread_name, rate):
         """Thread method to capture data from device interface.
         """
-        # change to video stream ip
-        video_stream = urllib.urlopen('http://192.168.1.45:8081/video.mjpg')
-        desktop_stream = urllib.urlopen('http://192.168.1.45:8082')
-        video_bytes_data = ''
-        desktop_bytes_data = ''
 
         while True:
-            video_bytes_data += video_stream.read(1024)
-            xd8 = video_bytes_data.find('\xff\xd8')
-            xd9 = video_bytes_data.find('\xff\xd9')
-            if xd8 != -1 and xd9 != -1:
-                jpg = video_bytes_data[xd8:xd9+2]
-                video_bytes_data = video_bytes_data[xd9+2:]
-                frame = cv2.imdecode(
-                    np.fromstring(jpg, dtype=np.uint8),
-                    cv2.IMREAD_COLOR
-                )
-                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            # change to video stream ip
+            video_stream = self.__get_stream_frame('http://192.168.1.45:8081/video.mjpg')
+            desktop_stream = self.__get_stream_frame('http://192.168.1.45:8082')
 
-                height, width = frame.shape[:2]
-                img = QtGui.QImage(
-                    frame,
-                    width,
-                    height,
-                    QtGui.QImage.Format_RGB888
-                )
-                img = QtGui.QPixmap.fromImage(img)
-                self.video_stream_output.setPixmap(img)
+            if video_stream:
+                self.video_stream_output.setPixmap(video_stream)
 
-            desktop_bytes_data += desktop_stream.read(1024)
-            xd8 = desktop_bytes_data.find('\xff\xd8')
-            xd9 = desktop_bytes_data.find('\xff\xd9')
-            if xd8 != -1 and xd9 != -1:
-                jpg = desktop_bytes_data[xd8:xd9+2]
-                desktop_bytes_data = desktop_bytes_data[xd9+2:]
-                frame = cv2.imdecode(
-                    np.fromstring(jpg, dtype=np.uint8),
-                    cv2.IMREAD_COLOR
-                )
-                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-
-                height, width = frame.shape[:2]
-                img = QtGui.QImage(
-                    frame,
-                    width,
-                    height,
-                    QtGui.QImage.Format_RGB888
-                )
-                img = QtGui.QPixmap.fromImage(img)
-                self.desktop_stream_output.setPixmap(img)
+            if desktop_stream:
+                self.desktop_stream_output.setPixmap(desktop_stream)
 
             self.__data.get_data(self._data_callback)
 
@@ -193,6 +195,12 @@ class MainProgram(QtWidgets.QMainWindow, main_window.Ui_MainWindow):
 
         self.current_user_label.setText('User: {}'.format(user))
         self.__data.set_user(user)
+
+        '''
+        self.__settings.beginGroup('Users')
+        self.__settings.setValue('size', 100)
+        self.__settings.endGroup()
+        '''
 
     '''
     def __set_path_button(self):
