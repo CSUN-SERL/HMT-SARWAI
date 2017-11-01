@@ -1,0 +1,38 @@
+//  Author : Sam Mouradian
+//  Name : Query JSON-ifier :
+//  Description : The Query JSON-ifier Module serves to create JSON queries
+//  from a .csv to send to the GCS
+
+const csvFilePath='queries.csv'
+const csv=require('csvtojson')
+var csvEncoding = {encoding: 'utf16le'};
+var express = require('express'), bodyParser = require('body-parser');
+var app = express();
+var js;
+app.use(bodyParser.json());
+
+//READS ALL DATA FROM CSV FILE AND CREATES JSON FOR EACH COLUMN
+csv()
+.fromFile(csvFilePath, csvEncoding)
+.on("end_parsed",function(jsonArrayObj){
+  //when parse finished, result is a JSON obj for each column in .csv
+  //console.log(jsonArrayObj);
+  js = jsonArrayObj;
+  console.log('.csv has been read...')
+  //console.log(js + '\n');
+})
+.on('done',(error)=>{
+    console.log('no more data left to read... \n')
+});
+
+//send JSON to localhost:3000/csv
+app.get('/csv', function(req, res){
+  res.status(200).send(js);
+  //console.log(js + '\n');
+  console.log('Queries have been written have been sent...');
+});
+//listens
+app.listen(3000, function () {
+  console.log(__dirname);
+  console.log('Example app listening on port 3000!')
+})
