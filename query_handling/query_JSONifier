@@ -34,5 +34,5 @@ app.get('/csv', function(req, res){
 //listens
 app.listen(3000, function () {
   console.log(__dirname);
-  console.log('Example app listening on port 3000!')
+  console.log('HMT awaiting query request on port 3000')
 })
