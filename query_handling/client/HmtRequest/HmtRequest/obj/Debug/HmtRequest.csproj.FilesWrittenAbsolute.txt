@@ -1,0 +1,5 @@
+/home/danny/dev/c#/HmtRequest/HmtRequest/obj/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/danny/dev/c#/HmtRequest/HmtRequest/bin/Debug/HmtRequest.exe.mdb
+/home/danny/dev/c#/HmtRequest/HmtRequest/bin/Debug/HmtRequest.exe
+/home/danny/dev/c#/HmtRequest/HmtRequest/obj/Debug/HmtRequest.exe
+/home/danny/dev/c#/HmtRequest/HmtRequest/obj/Debug/HmtRequest.exe.mdb
