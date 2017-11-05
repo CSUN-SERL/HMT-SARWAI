@@ -12,7 +12,7 @@ var index = 0;
 var imageLocation;
 var js2send = {};
 app.use(bodyParser.json());
-//var csvEncoding = {encoding: 'utf16le'};
+var csvEncoding = {encoding: 'utf16le'};
 //global.index = 0;
 //var timer = Math.floor(Math.random() * 5000) + 2000;
 
@@ -80,5 +80,5 @@ console.log('All Queries have been sent...');
 ////---------------------------------------------------------
 app.listen(9999, function() {
   console.log(__dirname);
-  console.log('listening on port 3001')
+  console.log('listening on port 9999')
 })
