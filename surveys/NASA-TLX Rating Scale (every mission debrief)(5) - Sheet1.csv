@@ -1,0 +1,18 @@
+Survey Name,Question,Type,Official Answers
+Mission Survey 1,"We are not only interested in assessing your performance but also the experiences you had during the different task conditions. In the most general sense we are examining the “workload"" you experienced. The factors that influence your experience of workload may come from the task itself, your feelings about your own performance, how much effort you put in, or the stress and frustration you felt.
+
+The workload contributed by different task elements may change as you get more familiar with a task, perform easier or harder versions of it, or move from one task to another. Please read the descriptions of the scales carefully. If you have a question about any of the scales, please ask the Researcher about it. 
+It is extremely important that they be clear to you.
+ 
+Please consider your responses carefully in distinguishing among the different task conditions. Your ratings will play an important role in the evaluation being conducted, thus your active participation is essential to the success of this experiment and is greatly appreciated by all of us.
+
+If you have any questions, please ask the Researcher at any time. You may click “begin” whenever you are ready.
+",Intro,
+Order,"How much mental and perceptual activity was required (e.g. thinking, deciding, calculating, remembering, looking, searching, etc.)? Was the task easy or demanding, simple or complex, exacting or forgiving?",TLX,Low|High
+6,"How much physical activity was required (e.g. pushing, pulling, turning, controlling, activating, etc.)? Was the task easy or demanding, slow or brisk, slack or strenuous, restful or laborious?",TLX,Low|High
+Adaptivity level,How much time pressure did you feel due to the rate or pace at which the task or task elements occurred? Was the pace slow or leisurely or rapid and frantic?,TLX,Low|High
+2,How successful do you think you were in accomplishing the goals of the task set by the experimenter? How satisfied were you with your performance in accomplishing these goals?,TLX,Poor|Good
+Last Edited By,How hard did you have to work (mentally and physically) to accomplish your level of performance?,TLX,Low|High
+Falisha Kanji,"How insecure, discouraged, irritated, stressed, and annoyed versus secure, gratified, content, relaxed and complacent did you feel during the task?",TLX,Low|High
+Last Edited,"Taking into account all of the above scales, what was your overall workload?",TLX,Low|High
+02/20/18,Thank you for participating! Please click continue.,Outro,

@@ -1,0 +1,19 @@
+Survey Name,Question,Type,Official Answers
+Mission Survey 2,"Please read each statement carefully and choose the answer that most accurately describes your feelings. If you have any questions, please ask the Researcher at any time. You may click “begin” whenever you are ready.
+",Intro,
+Order,The overall system is reliable,Scalar,Strongly Disagree|Disagree|Neither agree nor disagree|Agree|Strongly Agree
+4,The system communicates all necessary information effectively,Scalar,Strongly Disagree|Disagree|Neither agree nor disagree|Agree|Strongly Agree
+Adaptivity level,All the information provided by the system is accurate,Scalar,Strongly Disagree|Disagree|Neither agree nor disagree|Agree|Strongly Agree
+1,The victim detections sent from the robots are reliable (the robot reliably detected victims and ignored non-victims),Scalar,Strongly Disagree|Disagree|Neither agree nor disagree|Agree|Strongly Agree
+Last Edited By,I trust the overall system,Scalar,Strongly Disagree|Disagree|Neither agree nor disagree|Agree|Strongly Agree
+Falisha Kanji,The actions of the system are understandable,Scalar,Strongly Disagree|Disagree|Neither agree nor disagree|Agree|Strongly Agree
+Last Edited,The actions of the system are predictable,Scalar,Strongly Disagree|Disagree|Neither agree nor disagree|Agree|Strongly Agree
+02/20/18,"When the judgment was difficult, I felt like I could depend on the system",Scalar,Strongly Disagree|Disagree|Neither agree nor disagree|Agree|Strongly Agree
+,The system used my feedback effectively,Scalar,Strongly Disagree|Disagree|Neither agree nor disagree|Agree|Strongly Agree
+,My expectations of the system's performance were met,Scalar,Strongly Disagree|Disagree|Neither agree nor disagree|Agree|Strongly Agree
+,Thank you for participating! Please click continue.,Outro,
+,,,
+,,,
+,,,
+,,,
+, ,,

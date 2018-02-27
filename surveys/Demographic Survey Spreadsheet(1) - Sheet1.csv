@@ -1,0 +1,11 @@
+Survey Name,Question,Type,Official Answers
+Survey 1,"Please answer each question to the best of your ability. If you have any questions, please ask the Researcher at any time. You may click ""begin"" whenever you are ready.",Intro,
+Order,What is your age?,Numerical,Pick age|18-100
+1,To what gender do you most identify with?,Multiple,Male|Female|Other|Decline to state
+Adaptivity level,How often do you play video games?,Multiple,1-5 hours a week|6-10 hours a week|11-15 hours a week|16 or more hours per week|I don't play video games
+2,What is your level of experience/proficiency with computers?,Multiple,"None|Beginner (Example: I can use the internet, I can use my email, I can use programs such as Microsoft Word or Microsoft PowerPoint)|Intermediate (Example: I can use the internet, e-mail, and Microsoft Office. In addition, I have the ability to create graphics and make spreadsheets.)|Advanced (Example: I am proficient in programming and scripting)"
+Last Edited By,Check all items that you use on a weekly basis:,PickAll,"Global Positioning System (GPS-Google Maps, Waze, etc)|Video and/or audio conferencing tools|Social media sites (Facebook, Twitter, Snapchat, Instagram, etc.)|Cell phone applications other than e-mail, web browsing, text messaging and phone calls (e.g. News apps, games, etc.)|Automated Teller Machine (ATM)|Streaming media services (e.g. Netflix or Hulu)|E-readers (e.g. Kindle)|Self-checkout stations|Fitness devices (e.g. FitBit)|Webcam|Video games|Smart watches|Computers"
+Falisha Kanji,What organization do you work for?,FreeResponse,
+Last Edited,What is your profession?,FreeResponse,
+02/20/18,How many years of experience do you have in your current profession?,Numerical,Pick years|0-100
+,Thank you for participating! You will now be given your next set of questions. Please click continue.,Outro,

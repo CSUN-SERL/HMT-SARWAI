@@ -1,0 +1,24 @@
+Survey Name,Question,Type,Official Answers
+End Survey 1,"You will be presented with a series of pairs of rating scale titles (for example,  Effort vs. Mental Demand) and asked to choose which of the items was more important to your experience of workload in the tasks) that you just performed. 
+
+Each pair of scale titles will appear one set at a time. 
+Please select the Scale Title that represents the more important contributor to workload for the specific tasks you performed in this experiment.
+
+You may click “begin survey” whenever you are ready.
+",Intro,
+Order,Please select the Scale Title that represents the more important contributor to workload.,Multiple,Mental Demand|Physical Demand
+21,Please select the Scale Title that represents the more important contributor to workload.,Multiple,Mental Demand|Effort
+Adaptivity level,Please select the Scale Title that represents the more important contributor to workload.,Multiple,Mental Demand|Performance
+2,Please select the Scale Title that represents the more important contributor to workload.,Multiple,Mental Demand|Temporal Demand
+Last Edited By,Please select the Scale Title that represents the more important contributor to workload.,Multiple,Mental Demand|Frustration
+Falisha Kanji,Please select the Scale Title that represents the more important contributor to workload.,Multiple,Physical Demand|Effort
+Last Edited,Please select the Scale Title that represents the more important contributor to workload.,Multiple,Physical Demand|Performance
+02/20/18,Please select the Scale Title that represents the more important contributor to workload.,Multiple,Physical Demand|Temporal Demand
+,Please select the Scale Title that represents the more important contributor to workload.,Multiple,Physical Demand|Frustration
+,Please select the Scale Title that represents the more important contributor to workload.,Multiple,Effort|Performance
+,Please select the Scale Title that represents the more important contributor to workload.,Multiple,Effort|Temporal Demand
+,Please select the Scale Title that represents the more important contributor to workload.,Multiple,Effort|Frustration
+,Please select the Scale Title that represents the more important contributor to workload.,Multiple,Performance|Temporal Demand
+,Please select the Scale Title that represents the more important contributor to workload.,Multiple,Performance|Frustration
+,Please select the Scale Title that represents the more important contributor to workload.,Multiple,Temporal|Frustration
+,Thank you for participating! You will now participate in the last survey. Please click continue.,Outro,

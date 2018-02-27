@@ -1,0 +1,23 @@
+Survey Name,Question,Type,Official Answers
+End Survey 2,"Please read each statement carefully and select the answer that most accurately describes your feelings. When asked for an explanation, please answer as thoroughly as possible.
+
+You may click “begin survey” when you are ready.
+",Intro,
+Order,"Were the mission objectives clear? If not, please explain in the space below.",Multiple,Yes|@No
+20,"Were the mission objectives attainable? If not, please explain in the space below.",Multiple,Yes|@No
+Adaptivity level,"Overall, I would trust this system to assist me in saving lives. If you rated this 3 or below please explain why in the space below.",Scalar,@Strongly disagree|@Disagree|@Neither agree nor disagree|Agree|Strongly Agree
+2,I would be comfortable allowing this system to make all decisions. If you rated this 3 or below please explain why in the space below.,Scalar,@Strongly disagree|@Disagree|@Neither agree nor disagree|Agree|Strongly Agree
+Last Edited By,I would be comfortable relying on robots in future search and rescue missions. If you rated this 3 or below please explain why in the space below,Scalar,@Strongly disagree|@Disagree|@Neither agree nor disagree|Agree|Strongly Agree
+Falisha Kanji,I would be comfortable having a search and rescue team member rely upon this system. If you rated this 3 or below please explain why in the space below.,Scalar,@Strongly disagree|@Disagree|@Neither agree nor disagree|Agree|Strongly Agree
+Last Edited,I would be comfortable if I personally relied upon this system. If you rated this 3 or below please explain why in the space below.,Scalar,@Strongly disagree|@Disagree|@Neither agree nor disagree|Agree|Strongly Agree
+02/20/18,How difficult was it to perform the query task? If you rated this 3 or higher please explain in the space below.,Multiple,"The query task workload left more than enough spare time to easily attend to secondary tasks|The query task workload left barely enough spare time to attend to secondary tasks|@The query task workload left insufficient time to adequately attend to secondary tasks|@There sometimes was insufficient time to adequately complete query tasks|@There often was insufficient time to adequately complete query tasks
+"
+,How difficult was it to perform the live feed tasks? If you rated this 3 or higher please explain in the space below.,Multiple,"The live feed task workload left more than enough spare time to easily attend to secondary tasks|The live feed task workload left barely enough spare time to attend to secondary tasks|@The live feed task workload left insufficient time to adequately attend to secondary tasks|@There sometimes was insufficient time to adequately complete live feed tasks|@There often was insufficient time to adequately complete live feed tasks
+"
+,How difficult was it to perform the query task and the live feed task simultaneously? If you rated this 3 or higher please explain in the space below. ,Multiple,"The query task and live feed task workload left more than enough spare time to easily attend to secondary tasks|The query task and live feed task workload left barely enough spare time to attend to secondary tasks|@The query task and live feed task workload left insufficient time to adequately attend to secondary tasks|@There sometimes was insufficient time to adequately complete query task and live feed tasks|@There often was insufficient time to adequately complete query task and live feed tasks
+"
+,"If I was face with a similar task in the future, I would want to have this system with me. If you rated this 3 or below please explain in the space below.",Scalar,@Strongly disagree|@Disagree|@Neither agree nor disagree|Agree|Strongly Agree
+,"Over trials, did your trust increase, decrease, or stay the same? If your trust increased or decreased please explain why in the space below. ",Multiple,@Increase|@Decrease|Stay the same
+,"Did the number and/or type of queries change over trials? If yes, please explain how the number and/or type of queries changed over trials in the space below.",Multiple,@Yes|No
+,"Over trials did you notice that the way the system operated changed for the better, changed for the worse, changed but not for the better or worse, or remained the same? If it changed, please explain how it changed in the space below.",Multiple,@Changed for the better|@Changed for the worse|@Changed but not for the better or worse|Remained the same
+,Thank you for participating in the surveys! The Researcher will now interview you and tell you more about the experiment. ,Outro,
